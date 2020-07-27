@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="container">
     <list :list="nestedRouter" />
   </div>
 </template>

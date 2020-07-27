@@ -18,6 +18,14 @@ export const constantRouterMap = [{
       path: 'dashboard',
       name: 'dashboard',
       component: () => import('@/views/dashboard/index')
+    }, {
+      path: 'nested',
+      name: 'nested',
+      component: () => import('@/views/nested/index')
+    }, {
+      path: 'render',
+      name: 'render',
+      component: () => import('@/views/render/index')
     }
   ]
 }, {
