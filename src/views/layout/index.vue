@@ -8,7 +8,7 @@
         </router-link>
       </div>
       <div class="sidebar-router-wrapper">
-        <el-menu
+        <!-- <el-menu
           default-active="1-1"
           background-color="#304156"
           text-color="#ffffff"
@@ -21,14 +21,15 @@
             <template slot="title">
               <span slot="title"><icon-svg icon-class="category" />导航一</span>
             </template>
-            <el-menu-item  index="/base/index1"><icon-svg icon-class="category"/>选项1</el-menu-item>
-            <el-menu-item index="1-2"><icon-svg icon-class="category" />选项2</el-menu-item>
+            <el-menu-item  index="/nested"><icon-svg icon-class="category"/>nested</el-menu-item>
+            <el-menu-item index="/render"><icon-svg icon-class="category" />render</el-menu-item>
             <el-submenu index="1-3">
               <span slot="title"><icon-svg icon-class="category" />选项4</span>
               <el-menu-item index="1-3-1"><icon-svg icon-class="category" />选项5</el-menu-item>
             </el-submenu>
           </el-submenu>
-        </el-menu>
+        </el-menu> -->
+        <aside-bar />
       </div>
     </section>
     <section class="app-layout-section"> 
@@ -38,8 +39,12 @@
 </template>
 
 <script>
+import AsideBar from './components/AsideBar'
 export default {
   name: 'Layout',
+  components: {
+    AsideBar
+  },
   data() {
     return {
       isCollapse: false
@@ -47,7 +52,7 @@ export default {
   },
   mounted() {
     this.$store.dispatch('INCREMENT', 5)
-    console.log(this.$router)
+    // console.log(this.$router)
     // async function f(name) {
     //   await new Promise(resolve => {
     //     resolve(name)

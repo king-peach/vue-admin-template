@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import test from './modules/test'
+import router from './modules/router'
 import getters from './getters'
 
 Vue.use(Vuex)
@@ -21,7 +22,8 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   modules: {
-    test
+    test,
+    router
   },
   getters
 })
