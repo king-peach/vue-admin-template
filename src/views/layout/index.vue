@@ -3,47 +3,29 @@
     <section class="app-layout-aside">
       <div class="sidebar-logo-container">
         <router-link to="/" class="side-logo-link">
-          <img class="m-logo" :src="require('assets/logo.png')" alt="logo">
-          <h1 class="sidebar-title">通用后台模板</h1>
+          <img :src="require('assets/gold-logo.png')" alt="logo">
+          <img :src="require('assets/gold-logo-text.png')" alt="logo-text">
         </router-link>
       </div>
       <div class="sidebar-router-wrapper">
-        <!-- <el-menu
-          default-active="1-1"
-          background-color="#304156"
-          text-color="#ffffff"
-          class="el-menu-vertical-demo"
-          :collapse="isCollapse"
-          style="width:100%;"
-          :router="true"
-        >
-          <el-submenu index="base">
-            <template slot="title">
-              <span slot="title"><icon-svg icon-class="category" />导航一</span>
-            </template>
-            <el-menu-item  index="/nested"><icon-svg icon-class="category"/>nested</el-menu-item>
-            <el-menu-item index="/render"><icon-svg icon-class="category" />render</el-menu-item>
-            <el-submenu index="1-3">
-              <span slot="title"><icon-svg icon-class="category" />选项4</span>
-              <el-menu-item index="1-3-1"><icon-svg icon-class="category" />选项5</el-menu-item>
-            </el-submenu>
-          </el-submenu>
-        </el-menu> -->
-        <aside-bar />
+        <img class="aside-list-bg" :src="require('assets/aside-list-bg.png')" alt="bg">
+        <div class="el-menu-wrapper">
+          <aside-bar />
+        </div>
       </div>
     </section>
-    <section class="app-layout-section"> 
-      <router-view />
-    </section>
+    <main-section />
   </div>
 </template>
 
 <script>
 import AsideBar from './components/AsideBar'
+import MainSection from './components/MainSection'
 export default {
   name: 'Layout',
   components: {
-    AsideBar
+    AsideBar,
+    MainSection
   },
   data() {
     return {
@@ -66,10 +48,13 @@ export default {
 <style lang="scss" scoped>
 .app-main {
   font-family: Avenir,Helvetica Neue,Arial,Helvetica,sans-serif;
+  position: relative;
+  widows: 100%;
+  height: 100%;
 }
 .app-layout-aside {
   width: 210px;
-  background-color: #304156;
+  background-image: linear-gradient(180deg, #353438 1%, #201F22 100%);
   height: 100%;
   font-size: 0;
   position: fixed;
@@ -78,49 +63,51 @@ export default {
   bottom: 0;
   z-index: 999;
   overflow: hidden;
+  outline: none;
   .sidebar-logo-container {
     position: relative;
     width: 100%;
-    height: 50px;
+    height: 60px;
     background: #2b2f3a;
+    background: url(../../assets/aside-header-bg.png) no-repeat 0 0 / 100% 100%;
     text-align: center;
     overflow: hidden;
     .side-logo-link {
       display: block;
       overflow: hidden;
       text-align: center;
-      .m-logo {
-        display: inline-block;
-        height: 28px;
+      height: 100%;
+      img {
         vertical-align: middle;
-        margin-right: 10px;
-      }
-      .sidebar-title {
-        display: inline-block;
-        margin: 0;
-        color: #fff;
-        font-weight: 600;
-        line-height: 50px;
-        font-size: 14px;
-        vertical-align: middle;
+        margin-top: 22px;
+        &:first-child {
+          margin-right: 5px;
+        }
       }
     }
   }
   .sidebar-router-wrapper {
+    position: relative;
+    border-top: 1px solid rgba(228,203,155,0.61);
+    .aside-list-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: -1;
+    }
+    .el-menu-wrapper {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
     .el-menu-vertical-demo:not(.el-menu--collapse) {
       width: 200px;
       min-height: 400px;
     }
-    .svg-icon {
-      margin-right: 10px;
-    }
-  }
-}
-.app-layout-section {
-  margin-left: 210px;
-  height: 100%;
-  #container {
-    padding: 20px;
   }
 }
 </style>
