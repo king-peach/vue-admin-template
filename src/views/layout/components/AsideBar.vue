@@ -11,7 +11,7 @@ export default {
     },
     element(routers, c, level) {
       return routers
-        .map(route => {
+        .map((route) => {
           // 路由表hidden字段控制显隐
           if (route.hidden) return null
           // 嵌套路由递归处理
@@ -28,7 +28,7 @@ export default {
                   }
                 },
                 [
-                  c('span', { slot: 'title' }, [
+                  c('template', { slot: 'title' }, [
                     c('icon-svg', {
                       props: {
                         iconClass: route.meta.icon
@@ -37,7 +37,7 @@ export default {
                         marginRight: '10px'
                       }
                     }),
-                    route.meta.title
+                    c('span', { slot: 'title' }, route.meta.title)
                   ]),
                   this.element(route.children, c, level + 1)
                 ]
@@ -66,7 +66,7 @@ export default {
                       marginRight: '10px'
                     }
                   }),
-                  route.children[0].meta.title
+                  c('span', { slot: 'title' }, route.children[0].meta.title)
                 ]
               )
             }
@@ -101,23 +101,21 @@ export default {
             return null
           }
         })
-        .filter(item => item)
+        .filter((item) => item)
     }
   },
-  render: function(createElement) {
-    const isCollapse = true
+  render: function (createElement) {
+    const isCollapse = false
     return createElement(
       'el-menu',
       {
         props: {
-          backgroundColor: 'transparent',
+          backgroundColor: isCollapse ? '#303133' : 'transparent',
           textColor: 'rgba(224, 207, 174, .7)',
           activeTextColor: '#E8C897',
           collapse: isCollapse,
+          'default-active': '/nested',
           router: true
-        },
-        attrs: {
-          id: isCollapse ? 'el-menu-isCollapse' : 'el-menu'
         }
       },
       this.element(constantRouterMap, createElement, 0)
@@ -129,7 +127,8 @@ export default {
 <style lang="scss">
 .sidebar-router-wrapper {
   font-size: 14px;
-  #el-menu {
+  .el-menu {
+    width: 100%;
     .el-submenu__title {
       padding-right: 0;
       &:hover,
@@ -141,7 +140,8 @@ export default {
     .el-menu-item {
       padding-right: 0;
       &:hover,
-      &:focus {
+      &:focus,
+      &.is-active {
         background-color: transparent !important;
         color: rgb(224, 207, 174) !important;
       }
@@ -172,24 +172,6 @@ export default {
             rgba(255, 255, 255, 0.09) 99%
           ) !important;
         }
-      }
-    }
-  }
-  #el-menu-isCollapse {
-    .el-submenu__title {
-      padding-right: 0;
-      &:hover,
-      &:focus {
-        background-color: #383430 !important;
-        color: rgb(224, 207, 174) !important;
-      }
-    }
-    .el-menu-item {
-      padding-right: 0;
-      &:hover,
-      &:focus {
-        background-color: #383430 !important;
-        color: rgb(224, 207, 174) !important;
       }
     }
   }
