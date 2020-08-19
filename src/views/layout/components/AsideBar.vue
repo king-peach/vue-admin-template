@@ -2,16 +2,18 @@
 import { constantRouterMap } from '@/router/index'
 export default {
   name: 'asideBar',
-  mounted() {
-    console.log(constantRouterMap)
+  computed: {
+    defaultIndex() {
+      return this.$store.getters.currentPath
+    }
   },
   methods: {
     clickHandle(e) {
-      console.log(e)
+      this.$store.commit('UPDATE_CURRENTPATH', e.index)
     },
     element(routers, c, level) {
       return routers
-        .map((route) => {
+        .map(route => {
           // 路由表hidden字段控制显隐
           if (route.hidden) return null
           // 嵌套路由递归处理
@@ -25,6 +27,9 @@ export default {
                   },
                   attrs: {
                     level: level
+                  },
+                  on: {
+                    click: this.clickHandle
                   }
                 },
                 [
@@ -48,13 +53,16 @@ export default {
                 'el-menu-item',
                 {
                   props: {
-                    index: route.asidePath
+                    index: route.children[0].asidePath
                   },
                   class: {
                     'root-menu-item': true
                   },
                   style: {
                     color: 'rgba(224, 207, 174, .7)'
+                  },
+                  on: {
+                    click: this.clickHandle
                   }
                 },
                 [
@@ -101,11 +109,11 @@ export default {
             return null
           }
         })
-        .filter((item) => item)
+        .filter(item => item)
     }
   },
-  render: function (createElement) {
-    const isCollapse = false
+  render: function(createElement) {
+    const isCollapse = this.$store.getters.isCollapse
     return createElement(
       'el-menu',
       {
@@ -114,7 +122,7 @@ export default {
           textColor: 'rgba(224, 207, 174, .7)',
           activeTextColor: '#E8C897',
           collapse: isCollapse,
-          'default-active': '/nested',
+          defaultActive: this.defaultIndex,
           router: true
         }
       },
@@ -166,11 +174,7 @@ export default {
       .el-menu--inline {
         background-color: #121213 !important;
         .el-submenu.is-active {
-          background-image: linear-gradient(
-            90deg,
-            rgba(233, 197, 143, 0.22) 0%,
-            rgba(255, 255, 255, 0.09) 99%
-          ) !important;
+          background-image: linear-gradient(90deg, rgba(233, 197, 143, 0.22) 0%, rgba(255, 255, 255, 0.09) 99%) !important;
         }
       }
     }

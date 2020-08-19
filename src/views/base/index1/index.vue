@@ -11,6 +11,7 @@ export default {
   name: 'index',
   components: {
     Nested
-  }
+  },
+  methods: {}
 }
 </script>

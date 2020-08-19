@@ -1,6 +1,7 @@
 import router from './router'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
+import store from './store'
 
 const whiteList = ['/login', '/dashboard']
 const role = 'admin'
@@ -18,6 +19,13 @@ router.beforeEach((to, from, next) => {
   }
 })
 
-router.afterEach(() => {
+router.afterEach(to => {
   NProgress.done()
+  // 更新面包屑数据
+  let breadcrumb = []
+  breadcrumb.push({ path: '/dashboard/index', name: 'dashboard' })
+  if (to.name !== 'dashboard') {
+    breadcrumb = breadcrumb.concat(to.matched)
+  }
+  store.commit('UPDATE_BREADCRUMB', breadcrumb)
 })
