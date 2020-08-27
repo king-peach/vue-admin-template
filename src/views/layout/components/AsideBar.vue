@@ -18,7 +18,7 @@ export default {
           if (route.hidden) return null
           // 嵌套路由递归处理
           if (route.path && route.children) {
-            if (route.name) {
+            if (route.name || route.alwaysShow) {
               return c(
                 'el-submenu',
                 {
@@ -123,7 +123,8 @@ export default {
           activeTextColor: '#E8C897',
           collapse: isCollapse,
           defaultActive: this.defaultIndex,
-          router: true
+          router: true,
+          uniqueOpened: true
         }
       },
       this.element(constantRouterMap, createElement, 0)

@@ -19,23 +19,36 @@
         </el-breadcrumb>
       </div>
     </header>
+    <tags-nav />
     <div id="containe">
       <transition name="fade">
-        <router-view />
+        <keep-alive :include="visitedView">
+          <router-view :key="key" />
+        </keep-alive>
       </transition>
     </div>
   </section>
 </template>
 
 <script>
+import TagsNav from './TagsNav'
 export default {
   name: 'mainSection',
+  components: {
+    TagsNav
+  },
   computed: {
     breadcrumbList() {
       return this.$store.getters.breadcrumb
     },
     asideIsActive() {
       return this.$store.getters.isCollapse
+    },
+    key() {
+      return this.$route.fullPath
+    },
+    visitedView() {
+      return this.$store.getters.visitedView
     }
   },
   methods: {
@@ -43,7 +56,6 @@ export default {
      * @method 点击切换侧边栏显隐
      */
     handleChangeAsideStatus() {
-      this.asideIsActive = !this.asideIsActive
       this.$store.commit('UPDATE_COLLAPSE', !this.asideIsActive)
     },
     /**

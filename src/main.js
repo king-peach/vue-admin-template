@@ -3,7 +3,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import '@/style/index.scss'
-import { Button, Select, Menu, Submenu, MenuItem, MenuItemGroup, Tooltip, Breadcrumb, BreadcrumbItem } from 'element-ui'
+import { Button, Select, Menu, Submenu, MenuItem, MenuItemGroup, Tooltip, Breadcrumb, BreadcrumbItem, Dropdown, DropdownMenu, DropdownItem } from 'element-ui'
 import '@/permission'
 import '@/icons'
 
@@ -16,6 +16,9 @@ Vue.use(MenuItemGroup)
 Vue.use(Tooltip)
 Vue.use(Breadcrumb)
 Vue.use(BreadcrumbItem)
+Vue.use(Dropdown)
+Vue.use(DropdownMenu)
+Vue.use(DropdownItem)
 
 Vue.config.productionTip = false
 

@@ -1,5 +1,8 @@
 <template>
-  <div id="app-main" :class="[isCollapse ? 'close-sidebar' : 'open-sidebar', isMobile ? 'mobile' : '']">
+  <div
+    id="app-main"
+    :class="[isCollapse ? 'close-sidebar' : 'open-sidebar', isMobile ? 'mobile' : '']"
+  >
     <section class="app-layout-aside">
       <div class="sidebar-logo-container">
         <router-link to="/" class="side-logo-link">
@@ -88,7 +91,7 @@ export default {
         display: block;
       }
       .app-layout-aside {
-        width: 210px;
+        width: 180px;
       }
       .app-layout-section {
         margin-left: 0;

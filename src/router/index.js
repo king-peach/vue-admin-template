@@ -10,6 +10,16 @@ Router.prototype.push = function push(location) {
 
 Vue.use(Router)
 
+/**
+ * alwaysShow: true         如果设置为true, 则始终展示该目录，无论子路有多少
+ * name: 'router-name'      路由标识字段且作为<keep-alive>的key, 当不需要展示目录时可不设置, 其他任何时候应该设置
+ * meta: {
+ *   title: 'name',         侧边栏和标签栏菜单名称
+ *   icon: 'svg-icon',      侧边栏菜单图标
+ *   affix: true            如果设置为true, 则固定在标签导航栏，不可删除
+ * }
+ */
+
 export const constantRouterMap = [
   {
     path: '/login',
@@ -23,7 +33,7 @@ export const constantRouterMap = [
         path: 'index',
         name: 'dashboard',
         component: () => import('@/views/dashboard/index'),
-        meta: { title: 'dashboard', icon: 'dashboard' }
+        meta: { title: 'dashboard', icon: 'dashboard', affix: true }
       }
     ]
   },
