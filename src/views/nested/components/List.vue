@@ -1,6 +1,6 @@
 <template>
   <div class="nest-parent">
-    <div class="nest-label" v-for="item in list" :key="item.name">
+    <div v-for="item in list" :key="item.name" class="nest-label">
       <div v-if="item.children">
         <div>{{ item.label }}</div>
         <list :list="item.children" />

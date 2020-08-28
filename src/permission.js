@@ -21,13 +21,16 @@ router.beforeEach((to, from, next) => {
 
 router.afterEach(to => {
   NProgress.done()
-  console.log(to)
 
   // 更新面包屑数据
   let breadcrumb = []
-  breadcrumb.push({ path: '/dashboard/index', name: 'dashboard' })
+  breadcrumb.push({
+    path: '/dashboard/index',
+    name: 'dashboard'
+  })
+
   if (to.name !== 'dashboard') {
-    //去掉无name属性的路由
+    // 去掉无name属性的路由
     const routeBranch = to.matched.filter(route => {
       return route.name
     })
@@ -41,4 +44,7 @@ router.afterEach(to => {
   if (to.name && !hasTagsView) {
     store.commit('ADD_VISITED_VIEW', to)
   }
+
+  // 更新当前路由信息
+  store.commit('UPDATE_CURRENTPATH', to.fullPath)
 })

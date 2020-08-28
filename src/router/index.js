@@ -33,7 +33,11 @@ export const constantRouterMap = [
         path: 'index',
         name: 'dashboard',
         component: () => import('@/views/dashboard/index'),
-        meta: { title: 'dashboard', icon: 'dashboard', affix: true }
+        meta: {
+          title: 'dashboard',
+          icon: 'dashboard',
+          affix: true
+        }
       }
     ]
   },
@@ -41,26 +45,38 @@ export const constantRouterMap = [
     path: '/',
     name: 'index',
     component: Layout,
-    redirect: '/nested',
-    meta: { title: 'index', icon: 'dashboard' },
+    redirect: '/dashboard/index',
+    meta: {
+      title: 'index',
+      icon: 'dashboard'
+    },
     children: [
       {
         path: 'nested',
         name: 'nested',
         component: () => import('@/views/nested/index'),
-        meta: { title: 'nested', icon: 'nav-list' }
+        meta: {
+          title: 'nested',
+          icon: 'nav-list'
+        }
       },
       {
         path: 'render',
         name: 'render',
         component: () => import('@/views/render/index'),
-        meta: { title: 'render', icon: 'list-show' },
+        meta: {
+          title: 'render',
+          icon: 'list-show'
+        },
         children: [
           {
             path: 'test1',
             name: 'test1',
             component: () => import('@/views/render/index'),
-            meta: { title: 'test1', icon: 'list-hide' }
+            meta: {
+              title: 'test1',
+              icon: 'list-hide'
+            }
           }
         ]
       }
@@ -70,19 +86,27 @@ export const constantRouterMap = [
     path: '/base',
     name: 'base',
     component: Layout,
-    meta: { title: 'base', icon: 'list-show' },
+    meta: {
+      title: 'base',
+      icon: 'list-show'
+    },
     children: [
       {
         path: 'index1',
         name: 'index1',
         component: () => import('@/views/base/index1/index'),
-        meta: { title: 'index1', icon: 'category' }
+        meta: {
+          title: 'index1',
+          icon: 'category'
+        }
       }
     ]
   }
 ]
 
 export default new Router({
-  scrollBehavior: () => ({ y: 0 }),
+  scrollBehavior: () => ({
+    y: 0
+  }),
   routes: constantRouterMap
 })

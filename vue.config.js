@@ -26,7 +26,7 @@ module.exports = {
         hints: 'warning',
         maxAssetSize: 30000000,
         maxEntryPoingtSize: 50000000,
-        assetsFilter: function(assetsFilename) {
+        assetsFilter: function (assetsFilename) {
           return assetsFilename.endWith('.css') || assetsFilename.endWith('.js')
         }
       }

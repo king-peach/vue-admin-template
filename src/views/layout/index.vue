@@ -1,8 +1,5 @@
 <template>
-  <div
-    id="app-main"
-    :class="[isCollapse ? 'close-sidebar' : 'open-sidebar', isMobile ? 'mobile' : '']"
-  >
+  <div id="app-main" :class="[isCollapse ? 'close-sidebar' : 'open-sidebar', isMobile ? 'mobile' : '']">
     <section class="app-layout-aside">
       <div class="sidebar-logo-container">
         <router-link to="/" class="side-logo-link">
@@ -17,7 +14,7 @@
         </div>
       </div>
     </section>
-    <div class="asidebar-bg" @click="handleMobileAsidebarBg"></div>
+    <div class="asidebar-bg" @click="handleMobileAsidebarBg" />
     <main-section />
   </div>
 </template>

@@ -1,9 +1,16 @@
-import { constantRouterMap } from '@/router/index'
-import { judgementType } from '@/utils/index'
+import {
+  constantRouterMap
+} from '@/router/index'
+import {
+  judgementType
+} from '@/utils/index'
 
 const state = {
   asyncRouterMap: [],
-  breadcrumb: [{ path: '/dashboard/index', name: 'dashboard' }],
+  breadcrumb: [{
+    path: '/dashboard/index',
+    name: 'dashboard'
+  }],
   currentPath: '/dashboard/index'
 }
 

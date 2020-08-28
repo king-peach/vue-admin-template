@@ -1,14 +1,14 @@
 <template>
   <div class="tag-nav-wrapper">
     <ul class="tags-list">
-      <li class="tags-item" v-for="(item, index) in tagsView" :key="index">
+      <li v-for="(item, index) in tagsView" :key="index" :class="['tags-item', item.path === currentPath ? 'active' : '']" @click="handleLinkCurrentView(item)">
         {{ item.name }}
-        <i class="el-icon-close ic-close"></i>
+        <i v-if="!item.meta.affix" class="el-icon-close ic-close" @click="handleRemoveCurrentView(item)" />
       </li>
     </ul>
     <div class="operate-dropdown">
       <el-dropdown class="arrow-down-box">
-        <i class="el-icon-arrow-down"></i>
+        <i class="el-icon-arrow-down" />
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item>刷新当前页</el-dropdown-item>
           <el-dropdown-item>关闭当前页</el-dropdown-item>
@@ -26,6 +26,31 @@ export default {
   computed: {
     tagsView() {
       return this.$store.getters.visitedView
+    },
+    currentPath() {
+      return this.$store.getters.currentPath
+    }
+  },
+  mounted() {
+    console.log(this.tagsView)
+  },
+  methods: {
+    /**
+     * @method 点击跳转到当前页
+     * @param {Object} route 当前路由信息
+     */
+    handleLinkCurrentView(route) {
+      this.$store.commit('UPDATE_CURRENTPATH', route.path)
+      this.$router.push(route)
+    },
+    /**
+     * @method 删除当前页
+     * @param {Object} route 当前路由
+     */
+    handleRemoveCurrentView(route) {
+      const index = this.$store.getters.visitedView.indexOf(route)
+      this.$store.commit('REMOVE_VISITED_VIEW', route)
+      this.$store.commit('UPDATE_CURRENTPATH', this.$store.getters.visitedView[index - 1].path)
     }
   }
 }

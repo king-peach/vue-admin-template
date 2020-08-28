@@ -1,20 +1,6 @@
 <script>
 export default {
   name: 'render',
-  render: function(createElement) {
-    return createElement(
-      'el-menu',
-      {
-        props: {
-          backgroundColor: 'white',
-          textColor: '#333',
-          activeTextColor: '#409EFF',
-          collapse: false
-        }
-      },
-      this.element(this.tree, createElement)
-    )
-  },
   data() {
     return {
       tree: [
@@ -95,6 +81,20 @@ export default {
         })
         .filter(item => item)
     }
+  },
+  render: function(createElement) {
+    return createElement(
+      'el-menu',
+      {
+        props: {
+          backgroundColor: 'white',
+          textColor: '#333',
+          activeTextColor: '#409EFF',
+          collapse: false
+        }
+      },
+      this.element(this.tree, createElement)
+    )
   }
 }
 </script>

@@ -2,19 +2,19 @@
   <section class="app-layout-section">
     <header id="main-header">
       <img :src="require('assets/main-header-bg.png')" alt="main-header" class="m-bg" />
-      <div @click="handleChangeAsideStatus" class="aside-switch-wrapper">
+      <div class="aside-switch-wrapper" @click="handleChangeAsideStatus">
         <icon-svg icon-class="list-show" :class="['aside-switch', asideIsActive ? 'is-active' : '']" />
       </div>
       <div class="m-breadcrumb">
         <el-breadcrumb separator="/">
           <template v-for="item in breadcrumbList">
-            <el-breadcrumb-item :key="item.path" v-if="item.name === 'dashboard'" :to="{ path: item.path }">
+            <el-breadcrumb-item v-if="item.name === 'dashboard'" :key="item.path" :to="{ path: item.path }">
               <span @click="handleLink(item.path)">{{ item.name }}</span>
             </el-breadcrumb-item>
-            <el-breadcrumb-item :key="item.path" v-else-if="item.redirect" :to="{ path: item.redirect }">
+            <el-breadcrumb-item v-else-if="item.redirect" :key="item.path" :to="{ path: item.redirect }">
               <span @click="handleLink(item.redirect)">{{ item.name }}</span>
             </el-breadcrumb-item>
-            <el-breadcrumb-item :key="item.path" v-else>{{ item.name }}</el-breadcrumb-item>
+            <el-breadcrumb-item v-else :key="item.path">{{ item.name }}</el-breadcrumb-item>
           </template>
         </el-breadcrumb>
       </div>
