@@ -3,7 +3,23 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import '@/style/index.scss'
-import { Button, Select, Menu, Submenu, MenuItem, MenuItemGroup, Tooltip, Breadcrumb, BreadcrumbItem, Dropdown, DropdownMenu, DropdownItem } from 'element-ui'
+import {
+  Button,
+  Select,
+  Menu,
+  Submenu,
+  MenuItem,
+  MenuItemGroup,
+  Tooltip,
+  Breadcrumb,
+  BreadcrumbItem,
+  Dropdown,
+  DropdownMenu,
+  DropdownItem,
+  Form,
+  FormItem,
+  Input
+} from 'element-ui'
 import '@/permission'
 import '@/icons'
 
@@ -19,7 +35,9 @@ Vue.use(BreadcrumbItem)
 Vue.use(Dropdown)
 Vue.use(DropdownMenu)
 Vue.use(DropdownItem)
-
+Vue.use(Form)
+Vue.use(FormItem)
+Vue.use(Input)
 Vue.config.productionTip = false
 
 // 根据视窗宽度来改变layout状态, 待优化（节流）

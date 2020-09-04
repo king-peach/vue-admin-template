@@ -5,6 +5,18 @@
       <div class="aside-switch-wrapper" @click="handleChangeAsideStatus">
         <icon-svg icon-class="list-show" :class="['aside-switch', asideIsActive ? 'is-active' : '']" />
       </div>
+      <div class="avatar_wrapper">
+        <el-dropdown>
+          <span class="el-dropdown-link">
+            <img :src="require('assets/avatar_default.png')" alt="avatar" class="avatar" />
+            <i class="el-icon-caret-bottom icon-caret" />
+          </span>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item>个人中心</el-dropdown-item>
+            <el-dropdown-item divided>登出</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+      </div>
       <div class="m-breadcrumb">
         <el-breadcrumb separator="/">
           <template v-for="item in breadcrumbList">
@@ -64,7 +76,6 @@ export default {
      */
     handleLink(path) {
       this.$store.commit('UPDATE_CURRENTPATH', path)
-      console.log(this.$store.getters.currentPath)
     }
   }
 }
@@ -108,6 +119,29 @@ export default {
         transform: rotate(0);
         &.is-active {
           transform: rotateY(180deg);
+        }
+      }
+    }
+    .avatar_wrapper {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 80px;
+      height: 100%;
+      .el-dropdown-link {
+        display: inline-block;
+        height: 40px;
+        vertical-align: middle;
+        color: rgba(224, 207, 174, 0.8);
+        overflow: hidden;
+        cursor: pointer;
+        .avatar {
+          height: 40px;
+          margin-right: 10px;
+        }
+        .icon-caret {
+          position: relative;
+          bottom: 3px;
         }
       }
     }

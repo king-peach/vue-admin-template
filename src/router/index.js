@@ -45,7 +45,7 @@ export const constantRouterMap = [
     path: '/',
     name: 'index',
     component: Layout,
-    redirect: '/dashboard/index',
+    redirect: '/nested',
     meta: {
       title: 'index',
       icon: 'dashboard'
@@ -86,6 +86,7 @@ export const constantRouterMap = [
     path: '/base',
     name: 'base',
     component: Layout,
+    alwaysShow: true,
     meta: {
       title: 'base',
       icon: 'list-show'

@@ -3,17 +3,17 @@
     <ul class="tags-list">
       <li v-for="(item, index) in tagsView" :key="index" :class="['tags-item', item.path === currentPath ? 'active' : '']" @click="handleLinkCurrentView(item)">
         {{ item.name }}
-        <i v-if="!item.meta.affix" class="el-icon-close ic-close" @click="handleRemoveCurrentView(item)" />
+        <i v-if="!item.meta.affix" class="el-icon-close ic-close" @click.stop="handleRemoveCurrentView(item)" />
       </li>
     </ul>
     <div class="operate-dropdown">
-      <el-dropdown class="arrow-down-box">
+      <el-dropdown class="arrow-down-box" @command="handleCommand">
         <i class="el-icon-arrow-down" />
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item>刷新当前页</el-dropdown-item>
-          <el-dropdown-item>关闭当前页</el-dropdown-item>
-          <el-dropdown-item>关闭其他页</el-dropdown-item>
-          <el-dropdown-item>关闭所有</el-dropdown-item>
+          <el-dropdown-item command="refreshCurrentView">刷新当前页</el-dropdown-item>
+          <el-dropdown-item command="closeCurrentView">关闭当前页</el-dropdown-item>
+          <el-dropdown-item command="closeOtherView">关闭其他页</el-dropdown-item>
+          <el-dropdown-item command="closeAllView">关闭所有</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
     </div>
@@ -31,9 +31,6 @@ export default {
       return this.$store.getters.currentPath
     }
   },
-  mounted() {
-    console.log(this.tagsView)
-  },
   methods: {
     /**
      * @method 点击跳转到当前页
@@ -48,9 +45,50 @@ export default {
      * @param {Object} route 当前路由
      */
     handleRemoveCurrentView(route) {
-      const index = this.$store.getters.visitedView.indexOf(route)
+      const index = this.tagsView.indexOf(route)
       this.$store.commit('REMOVE_VISITED_VIEW', route)
-      this.$store.commit('UPDATE_CURRENTPATH', this.$store.getters.visitedView[index - 1].path)
+      if (route.path === this.currentPath) {
+        this.$store.commit('UPDATE_CURRENTPATH', this.tagsView[index - 1].path)
+        if (index > 0) this.$router.push(this.tagsView[index - 1].path)
+      }
+    },
+    /**
+     * @method 点击下拉菜单项事件
+     * @param {String} type 当前项标识
+     */
+    handleCommand(type) {
+      if (type === 'refreshCurrentView') {
+        // 刷新当前页
+        this.$router.go(this.currentPath)
+      } else if (type === 'closeCurrentView') {
+        // 关闭当前页
+        const [route] = this.tagsView.filter(item => {
+          return item.path === this.currentPath
+        })
+
+        if (route.meta.affix && this.tagsView.length === 1) return false
+
+        this.handleRemoveCurrentView(route)
+      } else if (type === 'closeOtherView') {
+        // 关闭其他页
+        const _tagsView = this.tagsView.filter(item => {
+          return item.path === this.currentPath || item.meta.affix
+        })
+
+        this.$store.commit('UPDATE_VISITED_VIEW', _tagsView)
+      } else if (type === 'closeAllView') {
+        // 关闭所有
+        const _tagsView = this.tagsView.filter(item => {
+          return item.meta.affix
+        })
+
+        this.$store.commit('UPDATE_VISITED_VIEW', _tagsView)
+
+        if (_tagsView.length) {
+          this.$store.commit('UPDATE_CURRENTPATH', _tagsView[_tagsView.length - 1].path)
+          this.$router.push(_tagsView[_tagsView.length - 1].path)
+        }
+      }
     }
   }
 }
