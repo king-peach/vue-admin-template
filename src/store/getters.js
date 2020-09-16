@@ -1,6 +1,10 @@
 const getters = {
-  count: state => state.test.count,
-  asyncRouterMap: state => state.router.asyncRouterMap
+  isCollapse: state => state.app.isCollapse,
+  asyncRouterMap: state => state.router.asyncRouterMap,
+  breadcrumb: state => state.router.breadcrumb,
+  currentPath: state => state.router.currentPath,
+  isMobile: state => state.app.isMobile,
+  visitedView: state => state.tagsNav.visitedView
 }
 
 export default getters
