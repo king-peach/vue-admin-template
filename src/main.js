@@ -3,25 +3,11 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import '@/style/index.scss'
-import {
-  Button,
-  Select,
-  Menu,
-  Submenu,
-  MenuItem,
-  MenuItemGroup,
-  Tooltip,
-  Breadcrumb,
-  BreadcrumbItem,
-  Dropdown,
-  DropdownMenu,
-  DropdownItem,
-  Form,
-  FormItem,
-  Input
-} from 'element-ui'
+import { Button, Select, Menu, Submenu, MenuItem, MenuItemGroup, Tooltip, Breadcrumb, BreadcrumbItem, Dropdown, DropdownMenu, DropdownItem, Form, FormItem, Input } from 'element-ui'
 import '@/permission'
 import '@/icons'
+/* 只在开发环境下引入mock */
+process.env.NODE_ENV === 'development' && require('@/mock')
 
 Vue.use(Button)
 Vue.use(Select)

@@ -3,19 +3,20 @@ import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import store from './store'
 
-const whiteList = ['/login', '/dashboard/index']
-const role = 'admin'
+const whiteList = ['/login', '/']
 router.beforeEach((to, from, next) => {
   NProgress.start()
-  if (whiteList.indexOf(to.path) > -1) {
-    next()
-    NProgress.done()
-  } else if (role === 'admin') {
+  if (localStorage.getItem('token')) {
     next()
     NProgress.done()
   } else {
-    next('/login')
-    NProgress.done()
+    if (whiteList.indexOf(to.path) > -1) {
+      next()
+      NProgress.done()
+    } else {
+      next('/login')
+      NProgress.done()
+    }
   }
 })
 

@@ -1,6 +1,6 @@
 <template>
   <div id="login-page">
-    <el-form class="login-form" :model="loginForm" :rules="loginRules">
+    <el-form ref="loginForm" class="loginForm" :model="loginForm" :rules="loginRules">
       <h1 class="title">vue-admin-element</h1>
       <el-form-item prop="username">
         <span class="svg-container">
@@ -12,43 +12,67 @@
         <span class="svg-container">
           <icon-svg icon-class="password" />
         </span>
-        <el-input v-model="loginForm.password" :type="pwdIsShow ? 'string' : 'password'" placeholder="密码" />
+        <el-input v-model="loginForm.password" autocomplete="new-password" :type="pwdIsShow ? 'string' : 'password'" placeholder="密码" />
         <span class="eye-wrapper" @click="pwdIsShow = !pwdIsShow">
           <icon-svg :icon-class="pwdIsShow ? 'eye-fill' : 'eye-close-fill'" />
         </span>
       </el-form-item>
-      <el-form-item>
-        <div class="submit">登录</div>
+      <el-form-item class="submit-box">
+        <div class="submit" @click="login">登录</div>
       </el-form-item>
     </el-form>
   </div>
 </template>
 
 <script>
+import { login } from '@/api/login'
 export default {
   name: 'login',
   data() {
     return {
       loginForm: {
-        username: '',
-        password: ''
+        username: 'admin',
+        password: '12345678'
       },
-      pwdIsShow: true,
+      pwdIsShow: false,
       loginRules: {
-        username: [{ require: true, message: '请输入用户名', trigger: 'blur' }],
-        password: [{ require: true, message: '请输入密码', trigger: 'blur' }]
+        username: [
+          { required: true, message: '请输入用户名', trigger: 'blur' },
+          { min: 3, message: '长度在3位字符以上', trigger: 'blur' }
+        ],
+        password: [
+          { required: true, message: '请输入密码', trigger: 'blur' },
+          { min: 6, message: '长度在6位字符以上', trigger: 'blur' }
+        ]
       }
+    }
+  },
+  mounted() {},
+  methods: {
+    /**
+     * @method login 登录
+     */
+    login() {
+      login(this.loginForm)
+        .then(res => {
+          localStorage.setItem('token', res.data.token)
+          this.$router.push('/')
+        })
+        .catch(err => console.log(err))
     }
   }
 }
 </script>
 
 <style lang="scss">
-.el-input {
-  input {
-    background-color: transparent;
-    border: none;
-    color: #ffffff;
+.el-form-item {
+  margin-bottom: 30px;
+  .el-input {
+    input {
+      background-color: transparent;
+      border: none;
+      color: #ffffff;
+    }
   }
 }
 </style>
@@ -60,7 +84,7 @@ export default {
   background-image: linear-gradient(180deg, #353438 1%, #201f22 100%);
   overflow: hidden;
   position: relative;
-  .login-form {
+  .loginForm {
     position: absolute;
     left: 0;
     right: 0;
@@ -81,7 +105,6 @@ export default {
       height: 50px;
       border-radius: 5px;
       background-color: rgba(0, 0, 0, 0.2);
-      overflow: hidden;
       .svg-container {
         line-height: 50px;
         color: rgba(224, 207, 174, 0.8);
@@ -99,17 +122,19 @@ export default {
         color: rgba(224, 207, 174, 0.8);
         cursor: pointer;
       }
-      .submit {
-        width: 100%;
-        height: 100%;
-        letter-spacing: 6px;
-        text-align: center;
-        line-height: 50px;
-        cursor: pointer;
-        background-color: rgba(224, 207, 174, 0.8);
-        color: #000;
-        &:hover {
-          opacity: 0.9;
+      &.submit-box {
+        height: 40px;
+        .submit {
+          width: 100%;
+          letter-spacing: 6px;
+          text-align: center;
+          line-height: 40px;
+          cursor: pointer;
+          background-color: rgba(224, 207, 174, 0.8);
+          color: #000;
+          &:hover {
+            opacity: 0.9;
+          }
         }
       }
     }

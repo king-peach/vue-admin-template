@@ -9,7 +9,7 @@ module.exports = {
   configureWebpack: config => {
     if (process.env.NODE_ENV === 'production') {
       config.plugins.push(
-        new uglifyJsPlugin({
+        new UglifyJsPlugin({
           uglifyOptions: {
             compress: {
               warnings: false,
@@ -26,7 +26,7 @@ module.exports = {
         hints: 'warning',
         maxAssetSize: 30000000,
         maxEntryPoingtSize: 50000000,
-        assetsFilter: function (assetsFilename) {
+        assetsFilter: function(assetsFilename) {
           return assetsFilename.endWith('.css') || assetsFilename.endWith('.js')
         }
       }
@@ -37,8 +37,7 @@ module.exports = {
   chainWebpack: config => {
     const svgRule = config.module.rule('svg')
     svgRule.uses.clear()
-    svgRule
-      .include
+    svgRule.include
       .add(resolve('src/icons'))
       .end()
       .test(/\.svg$/)
@@ -55,8 +54,7 @@ module.exports = {
       .set('components', resolve('src/components'))
       .set('api', resolve('src/api'))
     // 配置打包hash文件名
-    config
-      .output
+    config.output
       .filename('js/[name].[hash:3].js')
       .chunkFilename('js/[name].[chunkhash:3].js')
       .end()
@@ -68,5 +66,6 @@ module.exports = {
   },
   publicPath: './', // 配置打包基础路径
   lintOnSave: process.env.NODE_ENV !== 'production',
-  integrity: true // CDN安全属性选项
+  integrity: true, // CDN安全属性选项
+  outputDir: process.env.outputDir // 打包输入文件名
 }
