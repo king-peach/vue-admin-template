@@ -19,6 +19,19 @@ instance.interceptors.request.use(
       config.headers.Authorization = localStorage.getItem('token')
     }
 
+    // 表单提交处理请求参数
+    // if (config.headers['Content-Type'] === 'application/x-www-form-urlencoded') {
+    //   config.transformRequest = [
+    //     function(data) {
+    //       let ret = ``
+    //       Object.keys(data).forEach((key, index) => {
+    //         ret += Object.keys(data).length - 1 === index ? `${decodeURIComponent(key)}=${decodeURIComponent(data[key])}` : `${decodeURIComponent(key)}=${decodeURIComponent(data[key])}&`
+    //       })
+    //       return ret
+    //     }
+    //   ]
+    // }
+
     return config
   },
   error => {

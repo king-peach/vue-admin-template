@@ -25,7 +25,6 @@
 </template>
 
 <script>
-import { login } from '@/api/login'
 export default {
   name: 'login',
   data() {
@@ -53,9 +52,9 @@ export default {
      * @method login 登录
      */
     login() {
-      login(this.loginForm)
-        .then(res => {
-          localStorage.setItem('token', res.data.token)
+      this.$store
+        .dispatch('LOGIN', this.loginForm)
+        .then(() => {
           this.$router.push('/')
         })
         .catch(err => console.log(err))

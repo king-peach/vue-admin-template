@@ -26,11 +26,12 @@ export const constantRouterMap = [
     component: () => import('@/views/login/index')
   },
   {
-    path: '/dashboard',
+    path: '/',
     component: Layout,
+    redirect: '/dashboard',
     children: [
       {
-        path: 'index',
+        path: 'dashboard',
         name: 'dashboard',
         component: () => import('@/views/dashboard/index'),
         meta: {
@@ -40,15 +41,20 @@ export const constantRouterMap = [
         }
       }
     ]
-  },
+  }
+]
+
+export const asyncRouterMap = [
   {
     path: '/',
     name: 'index',
     component: Layout,
-    redirect: '/nested',
+    redirect: '/dashboard',
     meta: {
       title: 'index',
-      icon: 'dashboard'
+      icon: 'dashboard',
+      roles: ['admin', 'user'],
+      btnPermission: ['admin', 'user']
     },
     children: [
       {
@@ -57,7 +63,9 @@ export const constantRouterMap = [
         component: () => import('@/views/nested/index'),
         meta: {
           title: 'nested',
-          icon: 'nav-list'
+          icon: 'nav-list',
+          roles: ['admin', 'user'],
+          btnPermission: ['admin', 'user']
         }
       },
       {
@@ -66,7 +74,9 @@ export const constantRouterMap = [
         component: () => import('@/views/render/index'),
         meta: {
           title: 'render',
-          icon: 'list-show'
+          icon: 'list-show',
+          roles: ['admin', 'user'],
+          btnPermission: ['admin']
         },
         children: [
           {
@@ -75,7 +85,9 @@ export const constantRouterMap = [
             component: () => import('@/views/render/index'),
             meta: {
               title: 'test1',
-              icon: 'list-hide'
+              icon: 'list-hide',
+              roles: ['admin'],
+              btnPermission: ['admin']
             }
           }
         ]
@@ -109,5 +121,14 @@ export default new Router({
   scrollBehavior: () => ({
     y: 0
   }),
+  base: process.env.BASE_URL,
   routes: constantRouterMap
 })
+
+// 解决开发环境下路由重复警告的问题
+
+export const createRouter = () =>
+  new Router({
+    base: process.env.BASE_URL,
+    routes: constantRouterMap
+  })

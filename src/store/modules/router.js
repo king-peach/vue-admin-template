@@ -1,17 +1,16 @@
-import {
-  constantRouterMap
-} from '@/router/index'
-import {
-  judgementType
-} from '@/utils/index'
+import { constantRouterMap, asyncRouterMap } from '@/router/index'
+import { judgementType } from '@/utils/index'
+import { treeFlattening, listToTree } from '@/utils/tree'
 
 const state = {
-  asyncRouterMap: [],
-  breadcrumb: [{
-    path: '/dashboard/index',
-    name: 'dashboard'
-  }],
-  currentPath: '/dashboard/index'
+  addRouterMap: [],
+  breadcrumb: [
+    {
+      path: '/dashboard',
+      name: 'dashboard'
+    }
+  ],
+  currentPath: '/dashboard'
 }
 
 /**
@@ -22,13 +21,11 @@ const state = {
 function addRouterAsidePath(routers, parentPath) {
   routers.map(item => {
     item.asidePath = parentPath ? (parentPath === '/' ? `/${item.path}` : `${parentPath}/${item.path}`) : item.path
-    if (item.children) {
+    if (item.children && item.children.length) {
       addRouterAsidePath(item.children, item.asidePath)
     }
   })
 }
-
-addRouterAsidePath(constantRouterMap, '')
 
 const mutations = {
   UPDATE_BREADCRUMB: (state, value) => {
@@ -38,10 +35,33 @@ const mutations = {
   },
   UPDATE_CURRENTPATH: (state, value) => {
     state.currentPath = value
+  },
+  UPDATE_ADDROUTERMAP: (state, value) => {
+    state.addRouterMap = value
   }
 }
 
-const actions = {}
+const actions = {
+  GET_ASYNCROUTER: ({ commit }) => {
+    const temp = treeFlattening(asyncRouterMap)
+
+    const routerMap = temp.filter(item => {
+      return item.meta && item.meta.roles && item.meta.roles.indexOf(localStorage.getItem('role')) > -1
+    })
+
+    routerMap.forEach(element => {
+      if (element.children) delete element.children
+    })
+
+    const addRouterMap = constantRouterMap.concat(listToTree(routerMap, false, '0'))
+
+    addRouterAsidePath(addRouterMap, '')
+
+    commit('UPDATE_ADDROUTERMAP', addRouterMap)
+
+    return Promise.resolve()
+  }
+}
 
 export default {
   state,
