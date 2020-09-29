@@ -34,7 +34,6 @@ router.beforeEach((to, from, next) => {
             })
           })
           .catch(err => {
-            console.log(err)
             Message.error(err || `验证失败, 请重新登陆！`)
             NProgress.done()
           })
@@ -48,7 +47,7 @@ router.beforeEach((to, from, next) => {
       next()
       NProgress.done()
     } else {
-      next(`/login?redirect=${to.fullPath}`)
+      next(`/login?redirect=${to.query.redirect}`)
       NProgress.done()
     }
   }

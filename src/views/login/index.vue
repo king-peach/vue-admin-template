@@ -43,10 +43,15 @@ export default {
           { required: true, message: '请输入密码', trigger: 'blur' },
           { min: 6, message: '长度在6位字符以上', trigger: 'blur' }
         ]
-      }
+      },
+      toPath: '/'
     }
   },
-  mounted() {},
+  mounted() {
+    if (Object.keys(this.$route.query).length) {
+      this.toPath = this.$route.query.redirect
+    }
+  },
   methods: {
     /**
      * @method login 登录
@@ -55,7 +60,7 @@ export default {
       this.$store
         .dispatch('LOGIN', this.loginForm)
         .then(() => {
-          this.$router.push('/')
+          this.$router.push(this.toPath)
         })
         .catch(err => console.log(err))
     }

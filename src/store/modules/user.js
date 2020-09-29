@@ -21,6 +21,7 @@ const actions = {
         const { name, avatar } = res.data
         commit('UPDATE_AVATAR', avatar)
         commit('UPDATE_NAME', name)
+        commit('UPDATE_TOKEN')
         return Promise.resolve()
       })
       .catch(err => {

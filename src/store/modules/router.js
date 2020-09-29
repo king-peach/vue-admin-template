@@ -38,6 +38,9 @@ const mutations = {
   },
   UPDATE_ADDROUTERMAP: (state, value) => {
     state.addRouterMap = value
+  },
+  REMOVE_ADDROUTERMAP: state => {
+    state.addRouterMap = []
   }
 }
 

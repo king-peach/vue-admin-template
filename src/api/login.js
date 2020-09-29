@@ -13,3 +13,13 @@ export function login({ username, password } = {}) {
     }
   })
 }
+
+export function logout(token) {
+  return request({
+    url: '/auth/logout',
+    method: 'post',
+    data: {
+      token
+    }
+  })
+}

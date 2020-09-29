@@ -101,7 +101,9 @@ export const asyncRouterMap = [
     alwaysShow: true,
     meta: {
       title: 'base',
-      icon: 'list-show'
+      icon: 'list-show',
+      roles: ['admin'],
+      btnPermission: ['admin']
     },
     children: [
       {
@@ -110,7 +112,9 @@ export const asyncRouterMap = [
         component: () => import('@/views/base/index1/index'),
         meta: {
           title: 'index1',
-          icon: 'category'
+          icon: 'category',
+          roles: ['admin'],
+          btnPermission: ['admin']
         }
       }
     ]
