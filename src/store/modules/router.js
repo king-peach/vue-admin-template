@@ -1,6 +1,7 @@
 import { constantRouterMap, asyncRouterMap } from '@/router/index'
 import { judgementType } from '@/utils/index'
 import { treeFlattening, listToTree } from '@/utils/tree'
+import storage from '@/utils/storage'
 
 const state = {
   addRouterMap: [],
@@ -49,7 +50,7 @@ const actions = {
     const temp = treeFlattening(asyncRouterMap)
 
     const routerMap = temp.filter(item => {
-      return item.meta && item.meta.roles && item.meta.roles.indexOf(localStorage.getItem('role')) > -1
+      return item.meta && item.meta.roles && item.meta.roles.indexOf(storage.getItem('role')) > -1
     })
 
     routerMap.forEach(element => {

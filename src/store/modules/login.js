@@ -1,5 +1,6 @@
 import { login, logout } from '@/api/login'
 import router from '@/router'
+import storage from '@/utils/storage'
 const state = {
   token: void 0,
   role: void 0
@@ -7,19 +8,19 @@ const state = {
 
 const mutations = {
   UPDATE_TOKEN: (state, value) => {
-    state.token = value || localStorage.getItem('token')
+    state.token = value || storage.getItem('token')
   },
   REMOVE_TOKEN: state => {
     state.token = void 0
-    localStorage.removeItem('token')
+    storage.removeItem('token')
   },
   UPDATE_ROLE: (state, value) => {
     state.role = value
-    localStorage.setItem('role', value)
+    storage.setItem({ key: 'role', value: value, expires: storage.getItem('expires') })
   },
   DEL_ROLE: state => {
     state.role = void 0
-    localStorage.removeItem('role')
+    storage.removeItem('role')
   }
 }
 
@@ -29,7 +30,7 @@ const actions = {
       login(options)
         .then(res => {
           const token = res.data.token
-          localStorage.setItem('token', token)
+          storage.setItem({ key: 'token', value: token, expires: storage.getItem('expires') })
           router.push('/')
           commit('UPDATE_ROLE', options.username)
           commit('UPDATE_TOKEN', token)

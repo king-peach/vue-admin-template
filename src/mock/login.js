@@ -18,7 +18,8 @@ export default Mock.mock(`/auth/login`, `post`, request => {
       success: true,
       message: `登陆成功`,
       data: {
-        token: Random.string(15, 20)
+        token: Random.string(15, 20),
+        expires: 2 * 60
       }
     })
   } else {

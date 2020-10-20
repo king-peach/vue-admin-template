@@ -8,7 +8,7 @@
       <div class="avatar_wrapper">
         <el-dropdown @command="handleUserOperate">
           <span class="el-dropdown-link">
-            <img :src="require('assets/avatar_default.png')" alt="avatar" class="avatar" />
+            <img :src="avatar ? avatar : require('assets/avatar_default.png')" alt="avatar" class="avatar" />
             <i class="el-icon-caret-bottom icon-caret" />
           </span>
           <el-dropdown-menu slot="dropdown">
@@ -32,7 +32,7 @@
       </div>
     </header>
     <tags-nav />
-    <div id="containe">
+    <div id="container">
       <transition name="fade">
         <keep-alive :include="visitedView">
           <router-view :key="key" />
@@ -48,6 +48,11 @@ export default {
   name: 'mainSection',
   components: {
     TagsNav
+  },
+  data() {
+    return {
+      avatar: this.$store.getters.avatar
+    }
   },
   computed: {
     breadcrumbList() {
@@ -86,6 +91,8 @@ export default {
         this.$store.dispatch('LOGOUT').then(() => {
           this.$router.push(`login?redirect=${this.$route.fullPath}`)
         })
+      } else if (command === 'personCenter') {
+        this.$router.push(`/personCenter`)
       }
     }
   }
@@ -97,6 +104,7 @@ export default {
   margin-left: 210px;
   height: 100vh;
   #container {
+    height: calc(100vh - 158px);
     padding: 20px;
   }
   #main-header {
@@ -148,6 +156,7 @@ export default {
         cursor: pointer;
         .avatar {
           height: 40px;
+          border-radius: 50%;
           margin-right: 10px;
         }
         .icon-caret {

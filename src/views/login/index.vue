@@ -25,6 +25,7 @@
 </template>
 
 <script>
+import storage from '@/utils/storage'
 export default {
   name: 'login',
   data() {
@@ -48,7 +49,7 @@ export default {
     }
   },
   mounted() {
-    if (Object.keys(this.$route.query).length) {
+    if (Object.keys(this.$route.query).length && this.$route.query.redirect !== 'undefined') {
       this.toPath = this.$route.query.redirect
     }
   },
@@ -59,7 +60,8 @@ export default {
     login() {
       this.$store
         .dispatch('LOGIN', this.loginForm)
-        .then(() => {
+        .then(response => {
+          storage.setItem({ key: 'expires', value: response.data.expires, expires: 9 * 1000 * 1000 })
           this.$router.push(this.toPath)
         })
         .catch(err => console.log(err))

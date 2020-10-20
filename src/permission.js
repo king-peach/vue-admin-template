@@ -3,17 +3,18 @@ import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import store from './store'
 import { Message } from 'element-ui'
+import storage from '@/utils/storage'
 
 const whiteList = ['/login']
 router.beforeEach((to, from, next) => {
   NProgress.start()
-  if (localStorage.getItem('token')) {
+  if (storage.getItem('token')) {
     if (to.path.indexOf('/login') > -1) {
       next()
       NProgress.done()
     } else {
       // 获取用户信息if
-      if (!localStorage.getItem('role')) {
+      if (!storage.getItem('role')) {
         next(`login?redirect=${to.fullPath}`)
         NProgress.done()
       } else if (!store.getters.addRouterMap.length) {

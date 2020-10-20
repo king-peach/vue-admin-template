@@ -13,6 +13,7 @@ Vue.use(Router)
 /**
  * alwaysShow: true         如果设置为true, 则始终展示该目录，无论子路有多少
  * name: 'router-name'      路由标识字段且作为<keep-alive>的key, 当不需要展示目录时可不设置, 其他任何时候应该设置
+ * hidden: false            默认为false, 设置为true时, 侧边导航栏不展示, 此时必须带上meta属性, 否则报错
  * meta: {
  *   title: 'name',         侧边栏和标签栏菜单名称
  *   icon: 'svg-icon',      侧边栏菜单图标
@@ -38,6 +39,16 @@ export const constantRouterMap = [
           title: 'dashboard',
           icon: 'dashboard',
           affix: true
+        }
+      },
+      {
+        path: '/personCenter',
+        name: 'personCenter',
+        hidden: true,
+        component: () => import('@/views/user/personCenter'),
+        meta: {
+          title: '个人中心',
+          icon: 'account-fill'
         }
       }
     ]
