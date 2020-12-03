@@ -40,7 +40,7 @@ export default {
           icon: 'account'
         },
         {
-          key: '姓名',
+          key: '姓名1',
           value: this.$store.getters.name,
           icon: 'account'
         },
