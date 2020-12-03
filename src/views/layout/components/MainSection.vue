@@ -6,14 +6,14 @@
         <icon-svg icon-class="list-show" :class="['aside-switch', asideIsActive ? 'is-active' : '']" />
       </div>
       <div class="avatar_wrapper">
-        <el-dropdown>
+        <el-dropdown @command="handleUserOperate">
           <span class="el-dropdown-link">
-            <img :src="require('assets/avatar_default.png')" alt="avatar" class="avatar" />
+            <img :src="avatar ? avatar : require('assets/avatar_default.png')" alt="avatar" class="avatar" />
             <i class="el-icon-caret-bottom icon-caret" />
           </span>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>个人中心</el-dropdown-item>
-            <el-dropdown-item divided>登出</el-dropdown-item>
+            <el-dropdown-item command="personCenter">个人中心</el-dropdown-item>
+            <el-dropdown-item divided command="logout">登出</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </div>
@@ -32,7 +32,7 @@
       </div>
     </header>
     <tags-nav />
-    <div id="containe">
+    <div id="container">
       <transition name="fade">
         <keep-alive :include="visitedView">
           <router-view :key="key" />
@@ -48,6 +48,11 @@ export default {
   name: 'mainSection',
   components: {
     TagsNav
+  },
+  data() {
+    return {
+      avatar: this.$store.getters.avatar
+    }
   },
   computed: {
     breadcrumbList() {
@@ -76,6 +81,19 @@ export default {
      */
     handleLink(path) {
       this.$store.commit('UPDATE_CURRENTPATH', path)
+    },
+    /**
+     * @method 点击响应相关用户操作
+     * @param {String} command 菜单指令
+     */
+    handleUserOperate(command) {
+      if (command === 'logout') {
+        this.$store.dispatch('LOGOUT').then(() => {
+          this.$router.push(`login?redirect=${this.$route.fullPath}`)
+        })
+      } else if (command === 'personCenter') {
+        this.$router.push(`/personCenter`)
+      }
     }
   }
 }
@@ -86,6 +104,7 @@ export default {
   margin-left: 210px;
   height: 100vh;
   #container {
+    height: calc(100vh - 158px);
     padding: 20px;
   }
   #main-header {
@@ -137,6 +156,7 @@ export default {
         cursor: pointer;
         .avatar {
           height: 40px;
+          border-radius: 50%;
           margin-right: 10px;
         }
         .icon-caret {

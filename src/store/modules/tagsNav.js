@@ -1,13 +1,15 @@
 const state = {
-  visitedView: [{
-    path: '/dashboard/index',
-    name: 'dashboard',
-    meta: {
-      title: 'dashboard',
-      icon: 'dashboard',
-      affix: true
+  visitedView: [
+    {
+      path: '/dashboard',
+      name: 'dashboard',
+      meta: {
+        title: 'dashboard',
+        icon: 'dashboard',
+        affix: true
+      }
     }
-  }]
+  ]
 }
 
 const mutations = {

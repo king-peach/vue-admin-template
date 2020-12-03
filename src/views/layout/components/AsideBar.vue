@@ -1,5 +1,5 @@
 <script>
-import { constantRouterMap } from '@/router/index'
+import store from '@/store'
 export default {
   name: 'asideBar',
   computed: {
@@ -17,7 +17,7 @@ export default {
           // 路由表hidden字段控制显隐
           if (route.hidden) return null
           // 嵌套路由递归处理
-          if (route.path && route.children) {
+          if (route.path && route.children && route.children.length) {
             if (route.name || route.alwaysShow) {
               return c(
                 'el-submenu',
@@ -113,7 +113,7 @@ export default {
     }
   },
   render: function(createElement) {
-    const isCollapse = this.$store.getters.isCollapse
+    const isCollapse = store.getters.isCollapse
     return createElement(
       'el-menu',
       {
@@ -127,7 +127,7 @@ export default {
           uniqueOpened: true
         }
       },
-      this.element(constantRouterMap, createElement, 0)
+      this.element(store.getters.addRouterMap, createElement, 0)
     )
   }
 }

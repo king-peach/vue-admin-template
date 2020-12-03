@@ -5,6 +5,7 @@
 import axios from 'axios'
 import { Message, MessageBox } from 'element-ui'
 import router from '@/router'
+import storage from '@/utils/storage'
 
 const instance = axios.create({
   baseURL: process.env.VUE_APP_BASE_URL,
@@ -15,9 +16,22 @@ const instance = axios.create({
 instance.interceptors.request.use(
   config => {
     // 请求头带上token
-    if (localStorage.getItem('token')) {
-      config.headers.Authorization = localStorage.getItem('token')
+    if (storage.getItem('token')) {
+      config.headers.Authorization = storage.getItem('token')
     }
+
+    // 表单提交处理请求参数
+    // if (config.headers['Content-Type'] === 'application/x-www-form-urlencoded') {
+    //   config.transformRequest = [
+    //     function(data) {
+    //       let ret = ``
+    //       Object.keys(data).forEach((key, index) => {
+    //         ret += Object.keys(data).length - 1 === index ? `${decodeURIComponent(key)}=${decodeURIComponent(data[key])}` : `${decodeURIComponent(key)}=${decodeURIComponent(data[key])}&`
+    //       })
+    //       return ret
+    //     }
+    //   ]
+    // }
 
     return config
   },
@@ -53,7 +67,7 @@ instance.interceptors.response.use(
         type: 'warning'
       })
         .then(() => {
-          localStorage.removeItem('token')
+          storage.removeItem('token')
           router.push('/login')
         })
         .catch()

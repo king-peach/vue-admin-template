@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import { login } from '@/api/login'
+import storage from '@/utils/storage'
 export default {
   name: 'login',
   data() {
@@ -44,19 +44,25 @@ export default {
           { required: true, message: '请输入密码', trigger: 'blur' },
           { min: 6, message: '长度在6位字符以上', trigger: 'blur' }
         ]
-      }
+      },
+      toPath: '/'
     }
   },
-  mounted() {},
+  mounted() {
+    if (Object.keys(this.$route.query).length && this.$route.query.redirect !== 'undefined') {
+      this.toPath = this.$route.query.redirect
+    }
+  },
   methods: {
     /**
      * @method login 登录
      */
     login() {
-      login(this.loginForm)
-        .then(res => {
-          localStorage.setItem('token', res.data.token)
-          this.$router.push('/')
+      this.$store
+        .dispatch('LOGIN', this.loginForm)
+        .then(response => {
+          storage.setItem({ key: 'expires', value: response.data.expires, expires: 9 * 1000 * 1000 })
+          this.$router.push(this.toPath)
         })
         .catch(err => console.log(err))
     }

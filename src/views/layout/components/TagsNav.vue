@@ -2,7 +2,7 @@
   <div class="tag-nav-wrapper">
     <ul class="tags-list">
       <li v-for="(item, index) in tagsView" :key="index" :class="['tags-item', item.path === currentPath ? 'active' : '']" @click="handleLinkCurrentView(item)">
-        {{ item.name }}
+        {{ item.hidden ? item.name : item.meta.title }}
         <i v-if="!item.meta.affix" class="el-icon-close ic-close" @click.stop="handleRemoveCurrentView(item)" />
       </li>
     </ul>
@@ -37,6 +37,7 @@ export default {
      * @param {Object} route 当前路由信息
      */
     handleLinkCurrentView(route) {
+      console.log(route)
       this.$store.commit('UPDATE_CURRENTPATH', route.path)
       this.$router.push(route)
     },
