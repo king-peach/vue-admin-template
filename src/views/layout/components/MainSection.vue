@@ -13,7 +13,9 @@
       <div class="m-breadcrumb" />
     </header>
     <div id="containe">
-      <router-view />
+      <transition name="slide-fade">
+        <router-view />
+      </transition>
     </div>
   </section>
 </template>
@@ -72,5 +74,21 @@ export default {
       }
     }
   }
+}
+/* 可以设置不同的进入和离开动画 */
+/* 设置持续时间和动画函数 */
+.slide-fade-enter-active {
+  transition: all .8s ease;
+}
+.slide-fade-leave-active {
+  transition: all .3s ease;
+}
+.slide-fade-leave-to
+/* .slide-fade-leave-active for below version 2.1.8 */ {
+  // transform: translateX(10px);
+  display: none;
+}
+.slide-fade-enter {
+  opacity: 0;
 }
 </style>

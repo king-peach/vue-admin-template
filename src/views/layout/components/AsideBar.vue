@@ -6,8 +6,8 @@ export default {
     console.log(constantRouterMap)
   },
   methods: {
-    clickHandle(e) {
-      console.log(e)
+    clickHandle() {
+      console.log(this.$route.matched)
     },
     element(routers, c, level) {
       return routers
@@ -149,7 +149,7 @@ export default {
     .root-menu-item {
       &.is-active {
         background-image: linear-gradient(90deg, #e6d6b5 0%, #e9c58f 100%);
-        font-size: 14px;
+        // font-size: 14px;
         color: #383430 !important;
       }
     }
@@ -158,7 +158,7 @@ export default {
         &.is-active {
           & > .el-submenu__title {
             background-image: linear-gradient(90deg, #e6d6b5 0%, #e9c58f 100%);
-            font-size: 14px;
+            // font-size: 14px;
             color: #383430 !important;
           }
         }

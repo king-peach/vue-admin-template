@@ -14,6 +14,7 @@
     "node-sass": "^4.14.0",
     "nprogress": "^0.2.0",
     "sass-loader": "^8.0.2",
+    "selfsigned": "^1.10.8",
     "svg-sprite-loader": "^4.3.0",
     "vue": "^2.6.11",
     "vue-loader": "^15.9.2",
@@ -22,6 +23,7 @@
     "webpack": "^4.43.0"
   },
   "devDependencies": {
+    "@babel/code-frame": "^7.12.13",
     "@vue/cli-plugin-babel": "~4.3.0",
     "@vue/cli-plugin-eslint": "~4.3.0",
     "@vue/cli-service": "~4.3.0",
@@ -29,6 +31,7 @@
     "babel-plugin-component": "^1.1.1",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
+    "highlight.js": "^10.6.0",
     "uglifyjs-webpack-plugin": "^2.2.0",
     "vue-cli-plugin-svg-sprite": "~1.0.0",
     "vue-template-compiler": "^2.6.11"
