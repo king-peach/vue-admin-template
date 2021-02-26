@@ -37,7 +37,7 @@ export default {
      * @param {Object} route 当前路由信息
      */
     handleLinkCurrentView(route) {
-      console.log(route)
+      // console.log(route)
       this.$store.commit('UPDATE_CURRENTPATH', route.path)
       this.$router.push(route)
     },
