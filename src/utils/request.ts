@@ -68,51 +68,51 @@ instance.interceptors.response.use(
       })
         .then(() => {
           storage.removeItem('token')
-          router.push('/login')
+          return router.push('/login')
         })
-        .catch()
+        .catch(err => err)
     } else {
       // 非401提示错误信息
-      let error_msg = ``
+      let errorMsg = ``
 
       switch (status) {
         case 400:
-          error_msg = `请求错误(400)`
+          errorMsg = `请求错误(400)`
           break
         case 401:
-          error_msg = `无权访问(401)`
+          errorMsg = `无权访问(401)`
           break
         case 403:
-          error_msg = `拒绝访问(403)`
+          errorMsg = `拒绝访问(403)`
           break
         case 404:
-          error_msg = `访问出错(404)`
+          errorMsg = `访问出错(404)`
           break
         case 408:
-          error_msg = `请求超时(408), 请重试`
+          errorMsg = `请求超时(408), 请重试`
           break
         case 500:
-          error_msg = `服务器错误(500)`
+          errorMsg = `服务器错误(500)`
           break
         case 502:
-          error_msg = `网络错误(502)`
+          errorMsg = `网络错误(502)`
           break
         case 503:
-          error_msg = `服务不可用(503)`
+          errorMsg = `服务不可用(503)`
           break
         case 504:
-          error_msg = `网络超时(504)`
+          errorMsg = `网络超时(504)`
           break
         case 505:
-          error_msg = `HTTP版本不受支持(505)`
+          errorMsg = `HTTP版本不受支持(505)`
           break
         default:
-          error_msg = `连接出错,${status}`
+          errorMsg = `连接出错,${status}`
       }
 
       Message({
         type: `error`,
-        message: error_msg,
+        message: errorMsg,
         duration: 2000
       })
     }

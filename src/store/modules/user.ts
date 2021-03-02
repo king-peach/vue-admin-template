@@ -6,22 +6,22 @@ const state = {
 }
 
 const mutations = {
-  UPDATE_AVATAR: (state, value) => {
+  UPDATE_AVATAR: (state: any, value: string) => {
     state.avatar = value
   },
-  UPDATE_NAME: (state, value) => {
+  UPDATE_NAME: (state: any, value: string) => {
     state.name = value
   }
 }
 
 const actions = {
-  GET_INFO: ({ commit }) => {
+  GET_INFO: (context: any) => {
     getInfo()
       .then(res => {
         const { name, avatar } = res.data
-        commit('UPDATE_AVATAR', avatar)
-        commit('UPDATE_NAME', name)
-        commit('UPDATE_TOKEN')
+        context.commit('UPDATE_AVATAR', avatar)
+        context.commit('UPDATE_NAME', name)
+        context.commit('UPDATE_TOKEN')
         return Promise.resolve()
       })
       .catch(err => {

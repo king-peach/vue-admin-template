@@ -1,4 +1,5 @@
-import router, { createRouter } from './router'
+// import router, { createRouter } from './router'
+import router from './router'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import store from './store'
@@ -6,7 +7,7 @@ import { Message } from 'element-ui'
 import storage from '@/utils/storage'
 
 const whiteList = ['/login']
-router.beforeEach((to, from, next) => {
+router.beforeEach((to, from, next: Function) => {
   NProgress.start()
   if (storage.getItem('token')) {
     if (to.path.indexOf('/login') > -1) {
@@ -21,11 +22,13 @@ router.beforeEach((to, from, next) => {
         store
           .dispatch('GET_INFO')
           .then(() => {
-            store.dispatch('GET_ASYNCROUTER').then(() => {
+            return store.dispatch('GET_ASYNCROUTER').then(() => {
               // 动态添加可访问路由表
-              router.matcher = createRouter().matcher
+              // const newRouter: any = createRouter()
+              // router.matcher = newRouter.matcher
               router.addRoutes(store.getters.addRouterMap)
               // hack方法，确保addRoutes已经完成，replace设置未true，导航不会留下历史记录
+              // console.log(store.getters.addRouterMap)
               next({
                 ...to,
                 replace: true
@@ -66,7 +69,7 @@ router.afterEach(to => {
 
   if (to.name !== 'dashboard') {
     // 去掉无name属性的路由
-    const routeBranch = to.matched.filter(route => {
+    const routeBranch: any = to.matched.filter(route => {
       return route.name
     })
     // 生成当前面包屑数据
@@ -75,7 +78,7 @@ router.afterEach(to => {
   store.commit('UPDATE_BREADCRUMB', breadcrumb)
 
   // 更新标签导航栏数据
-  const hasTagsView = store.getters.visitedView.some(route => route.name && route.name === to.name)
+  const hasTagsView = store.getters.visitedView.some((route: any) => route.name && route.name === to.name)
   if (to.name && !hasTagsView) {
     store.commit('ADD_VISITED_VIEW', to)
   }

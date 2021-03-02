@@ -19,8 +19,8 @@ const state = {
  * @param {Array} routers 静态路由表
  * @param {String} parentPath 父级路由路径
  */
-function addRouterAsidePath(routers, parentPath) {
-  routers.map(item => {
+function addRouterAsidePath (routers: Array<any>, parentPath: string) {
+  routers.map((item: any) => {
     item.asidePath = parentPath ? (parentPath === '/' ? `/${item.path}` : `${parentPath}/${item.path}`) : item.path
     if (item.children && item.children.length) {
       addRouterAsidePath(item.children, item.asidePath)
@@ -29,39 +29,39 @@ function addRouterAsidePath(routers, parentPath) {
 }
 
 const mutations = {
-  UPDATE_BREADCRUMB: (state, value) => {
+  UPDATE_BREADCRUMB: (state: any, value: string) => {
     if (judgementType.isArray(value) && value.length) {
       return (state.breadcrumb = value)
     }
   },
-  UPDATE_CURRENTPATH: (state, value) => {
+  UPDATE_CURRENTPATH: (state: any, value: string) => {
     state.currentPath = value
   },
-  UPDATE_ADDROUTERMAP: (state, value) => {
+  UPDATE_ADDROUTERMAP: (state: any, value: []) => {
     state.addRouterMap = value
   },
-  REMOVE_ADDROUTERMAP: state => {
+  REMOVE_ADDROUTERMAP: (state: any) => {
     state.addRouterMap = []
   }
 }
 
 const actions = {
-  GET_ASYNCROUTER: ({ commit }) => {
+  GET_ASYNCROUTER: (context: any) => {
     const temp = treeFlattening(asyncRouterMap)
 
-    const routerMap = temp.filter(item => {
+    const routerMap = temp.filter((item: any) => {
       return item.meta && item.meta.roles && item.meta.roles.indexOf(storage.getItem('role')) > -1
     })
 
-    routerMap.forEach(element => {
+    routerMap.forEach((element: any) => {
       if (element.children) delete element.children
     })
 
-    const addRouterMap = constantRouterMap.concat(listToTree(routerMap, false, '0'))
+    const addRouterMap = constantRouterMap.concat(listToTree(routerMap, false, 0))
 
     addRouterAsidePath(addRouterMap, '')
 
-    commit('UPDATE_ADDROUTERMAP', addRouterMap)
+    context.commit('UPDATE_ADDROUTERMAP', addRouterMap)
 
     return Promise.resolve()
   }

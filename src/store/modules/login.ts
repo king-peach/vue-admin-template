@@ -7,48 +7,50 @@ const state = {
 }
 
 const mutations = {
-  UPDATE_TOKEN: (state, value) => {
+  UPDATE_TOKEN: (state: any, value: string) => {
     state.token = value || storage.getItem('token')
   },
-  REMOVE_TOKEN: state => {
+  REMOVE_TOKEN: (state: any) => {
     state.token = void 0
     storage.removeItem('token')
   },
-  UPDATE_ROLE: (state, value) => {
+  UPDATE_ROLE: (state: any, value: string) => {
     state.role = value
-    storage.setItem({ key: 'role', value: value, expires: storage.getItem('expires') })
+    const item: any = { key: 'role', value: value, expires: storage.getItem('expires') }
+    storage.setItem(item)
   },
-  DEL_ROLE: state => {
+  DEL_ROLE: (state: any) => {
     state.role = void 0
     storage.removeItem('role')
   }
 }
 
 const actions = {
-  LOGIN: ({ commit }, options) => {
+  LOGIN: (context: any, options: any) => {
     return new Promise((resolve, reject) => {
       login(options)
         .then(res => {
           const token = res.data.token
-          storage.setItem({ key: 'token', value: token, expires: storage.getItem('expires') })
-          router.push('/')
-          commit('UPDATE_ROLE', options.username)
-          commit('UPDATE_TOKEN', token)
+          const item: any = { key: 'token', value: token, expires: storage.getItem('expires') }
+          storage.setItem(item)
+          context.commit('UPDATE_ROLE', options.username)
+          context.commit('UPDATE_TOKEN', token)
           resolve(res)
+          return router.push('/')
         })
         .catch(err => {
           reject(err)
         })
     })
   },
-  LOGOUT: ({ state, commit }) => {
+  LOGOUT: (context: any) => {
     return new Promise((resolve, reject) => {
-      logout(state.token)
+      logout(context.state.token)
         .then(res => {
-          commit('REMOVE_TOKEN')
-          commit('DEL_ROLE')
-          commit('REMOVE_ADDROUTERMAP')
-          commit('REMOVE_VISITED_VIEW')
+          context.commit('REMOVE_TOKEN')
+          context.commit('DEL_ROLE')
+          context.commit('REMOVE_ADDROUTERMAP')
+          context.commit('REMOVE_VISITED_VIEW')
           resolve(res)
         })
         .catch(err => reject(err))

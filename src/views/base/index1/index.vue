@@ -5,13 +5,13 @@
   </div>
 </template>
 
-<script>
-import Nested from '@/views/nested/index'
-export default {
-  name: 'index',
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator'
+const Nested = require('@/views/nested/index.vue')
+@Component({
   components: {
     Nested
-  },
-  methods: {}
-}
+  }
+})
+export default class NestedIndex extends Vue {}
 </script>

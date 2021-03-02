@@ -4,17 +4,17 @@ const state = {
 }
 
 const mutations = {
-  UPDATE_COLLAPSE: (state, value) => {
+  UPDATE_COLLAPSE: (state: any, value: string) => {
     state.isCollapse = value
   },
-  UPDATE_IS_MOBILE: (state, value) => {
+  UPDATE_IS_MOBILE: (state: any, value: string) => {
     state.isMobile = value
   }
 }
 
 const actions = {
-  UPDATE_COLLAPSE({ commit }, value) {
-    commit('UPDATE_COLLAPSE', value)
+  UPDATE_COLLAPSE: (context: any, value: string) => {
+    context.commit('UPDATE_COLLAPSE', value)
   }
 }
 

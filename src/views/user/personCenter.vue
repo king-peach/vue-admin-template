@@ -30,7 +30,7 @@ export default {
   components: {
     ResetPassword
   },
-  data() {
+  data () {
     return {
       resetPasswordVisible: false,
       userList: [
@@ -59,13 +59,13 @@ export default {
     }
   },
   methods: {
-    handleResetPassword() {
+    handleResetPassword () {
       this.resetPasswordVisible = true
     },
-    comfirmReset() {
+    comfirmReset () {
       this.resetPasswordVisible = false
     },
-    cancelReset() {
+    cancelReset () {
       this.resetPasswordVisible = false
     }
   }

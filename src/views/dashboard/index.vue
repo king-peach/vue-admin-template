@@ -5,11 +5,7 @@
   </div>
 </template>
 
-<script>
-// import { constantRouterMap } from '@/router/index'
-import '@/icons/svg/dashboard.svg'
-export default {
-  name: 'dashboard',
-  methods: {}
-}
+<script lang="ts">
+import { Vue } from 'vue-property-decorator'
+export default class Dashboard extends Vue {}
 </script>

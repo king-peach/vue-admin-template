@@ -28,7 +28,7 @@
 import storage from '@/utils/storage'
 export default {
   name: 'login',
-  data() {
+  data () {
     return {
       loginForm: {
         username: 'admin',
@@ -48,7 +48,7 @@ export default {
       toPath: '/'
     }
   },
-  mounted() {
+  mounted () {
     if (Object.keys(this.$route.query).length && this.$route.query.redirect !== 'undefined') {
       this.toPath = this.$route.query.redirect
     }
@@ -57,7 +57,7 @@ export default {
     /**
      * @method login 登录
      */
-    login() {
+    login () {
       this.$store
         .dispatch('LOGIN', this.loginForm)
         .then(response => {

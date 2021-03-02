@@ -3,15 +3,15 @@ import store from '@/store'
 export default {
   name: 'asideBar',
   computed: {
-    defaultIndex() {
+    defaultIndex () {
       return this.$store.getters.currentPath
     }
   },
   methods: {
-    clickHandle(e) {
+    clickHandle (e) {
       this.$store.commit('UPDATE_CURRENTPATH', e.index)
     },
-    element(routers, c, level) {
+    element (routers, c, level) {
       return routers
         .map(route => {
           // 路由表hidden字段控制显隐
@@ -112,7 +112,7 @@ export default {
         .filter(item => item)
     }
   },
-  render: function(createElement) {
+  render: function (createElement) {
     const isCollapse = store.getters.isCollapse
     return createElement(
       'el-menu',

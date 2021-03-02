@@ -46,14 +46,14 @@ export default {
       }
     }
   },
-  data() {
+  data () {
     return {
       valueName: '',
       valueId: this.value,
       defaultExpandedKeys: []
     }
   },
-  mounted() {
+  mounted () {
     this.defaultExpandedKeys = [this.valueId]
     this.valueName = this.$refs.treeSelect.getNode(this.valueId)[this.props.label]
     // console.log(this.valueName)
@@ -63,12 +63,12 @@ export default {
      * @method handleNodeClick 点击获取当前节点
      * @param {Object} node 当前节点
      */
-    handleNodeClick(node) {
+    handleNodeClick (node) {
       this.valueName = node[this.props.label]
       this.valueId = node[this.props.value]
       this.$emit('getValue', this.valueId)
     },
-    clearHandle() {
+    clearHandle () {
       this.valueName = ''
       this.valueId = null
       this.defaultExpandedKeys = []

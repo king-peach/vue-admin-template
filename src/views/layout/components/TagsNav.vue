@@ -24,10 +24,10 @@
 export default {
   name: 'tagsNav',
   computed: {
-    tagsView() {
+    tagsView () {
       return this.$store.getters.visitedView
     },
-    currentPath() {
+    currentPath () {
       return this.$store.getters.currentPath
     }
   },
@@ -36,7 +36,7 @@ export default {
      * @method 点击跳转到当前页
      * @param {Object} route 当前路由信息
      */
-    handleLinkCurrentView(route) {
+    handleLinkCurrentView (route) {
       // console.log(route)
       this.$store.commit('UPDATE_CURRENTPATH', route.path)
       this.$router.push(route)
@@ -45,7 +45,7 @@ export default {
      * @method 删除当前页
      * @param {Object} route 当前路由
      */
-    handleRemoveCurrentView(route) {
+    handleRemoveCurrentView (route) {
       const index = this.tagsView.indexOf(route)
       this.$store.commit('REMOVE_VISITED_VIEW', route)
       if (route.path === this.currentPath) {
@@ -57,7 +57,7 @@ export default {
      * @method 点击下拉菜单项事件
      * @param {String} type 当前项标识
      */
-    handleCommand(type) {
+    handleCommand (type) {
       if (type === 'refreshCurrentView') {
         // 刷新当前页
         this.$router.go(this.currentPath)

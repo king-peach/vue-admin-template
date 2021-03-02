@@ -49,22 +49,22 @@ export default {
   components: {
     TagsNav
   },
-  data() {
+  data () {
     return {
       avatar: this.$store.getters.avatar
     }
   },
   computed: {
-    breadcrumbList() {
+    breadcrumbList () {
       return this.$store.getters.breadcrumb
     },
-    asideIsActive() {
+    asideIsActive () {
       return this.$store.getters.isCollapse
     },
-    key() {
+    key () {
       return this.$route.fullPath
     },
-    visitedView() {
+    visitedView () {
       return this.$store.getters.visitedView
     }
   },
@@ -72,21 +72,21 @@ export default {
     /**
      * @method 点击切换侧边栏显隐
      */
-    handleChangeAsideStatus() {
+    handleChangeAsideStatus () {
       this.$store.commit('UPDATE_COLLAPSE', !this.asideIsActive)
     },
     /**
      * @method 点击面包屑路由跳转
      * @param {String} path 路由path
      */
-    handleLink(path) {
+    handleLink (path) {
       this.$store.commit('UPDATE_CURRENTPATH', path)
     },
     /**
      * @method 点击响应相关用户操作
      * @param {String} command 菜单指令
      */
-    handleUserOperate(command) {
+    handleUserOperate (command) {
       if (command === 'logout') {
         this.$store.dispatch('LOGOUT').then(() => {
           this.$router.push(`login?redirect=${this.$route.fullPath}`)

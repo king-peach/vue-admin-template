@@ -29,10 +29,10 @@ export default {
     MainSection
   },
   computed: {
-    isCollapse() {
+    isCollapse () {
       return this.$store.getters.isCollapse
     },
-    isMobile() {
+    isMobile () {
       return this.$store.getters.isMobile
     }
   },
@@ -40,7 +40,7 @@ export default {
     /**
      * @method 控制mobile模式下侧边栏显隐
      */
-    handleMobileAsidebarBg() {
+    handleMobileAsidebarBg () {
       this.$store.commit('UPDATE_COLLAPSE', true)
     }
   }

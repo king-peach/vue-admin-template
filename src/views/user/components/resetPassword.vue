@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { editPassword } from '@/api/personCenter'
+import { editPassword } from '@/api/personCenter.ts'
 export default {
   name: 'resetPassword',
   props: {
@@ -28,7 +28,7 @@ export default {
       required: true
     }
   },
-  data() {
+  data () {
     const comfirmPassValid = (rule, value, callback) => {
       if (!value) {
         callback(new Error('请重复新密码!'))
@@ -53,7 +53,7 @@ export default {
     }
   },
   watch: {
-    show(val) {
+    show (val) {
       this.resetPasswordVisible = val
     }
   },
@@ -62,7 +62,7 @@ export default {
      * @method 点击确认回调
      * @param {String} formName ref标识
      */
-    handleComfirm(formName) {
+    handleComfirm (formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
           editPassword(this.resetPasswordForm)
@@ -93,7 +93,7 @@ export default {
      * @method 点击取消回调
      * @param {String} formName ref标识
      */
-    handleCancel(formName) {
+    handleCancel (formName) {
       this.$emit('cancel')
       this.$refs[formName].resetFields()
     }

@@ -1,7 +1,7 @@
 <script>
 export default {
   name: 'render',
-  data() {
+  data () {
     return {
       tree: [
         {
@@ -46,10 +46,10 @@ export default {
     }
   },
   methods: {
-    clickHandle(e) {
+    clickHandle (e) {
       console.log(e)
     },
-    element(list, c) {
+    element (list, c) {
       return list
         .map(item => {
           if (item.children && item.children.length) {
@@ -82,7 +82,7 @@ export default {
         .filter(item => item)
     }
   },
-  render: function(createElement) {
+  render: function (createElement) {
     return createElement(
       'el-menu',
       {

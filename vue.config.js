@@ -35,6 +35,7 @@ module.exports = {
     }
   },
   chainWebpack: config => {
+    // svg打包
     const svgRule = config.module.rule('svg')
     svgRule.uses.clear()
     svgRule.include

@@ -18,10 +18,10 @@ export default {
     }
   },
   computed: {
-    iconName() {
+    iconName () {
       return `#icon-${this.iconClass}`
     },
-    svgClass() {
+    svgClass () {
       if (this.className) {
         // 自定义svg class
         return `svg-icon ${this.className}`

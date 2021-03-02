@@ -1,11 +1,11 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Layout from '@/views/layout'
+import Layout from '@/views/layout/index.vue'
 
 /* 解决Element-UI导航栏中的vue-router在3.0+版本重复点击菜单报错问题 */
-const originalPush = Router.prototype.push
-Router.prototype.push = function push(location) {
-  return originalPush.call(this, location).catch(err => err)
+const originalPush: any = Router.prototype.push
+Router.prototype.push = function push (location: any) {
+  return originalPush.call(this, location).catch((err: string) => err)
 }
 
 Vue.use(Router)
@@ -21,10 +21,10 @@ Vue.use(Router)
  * }
  */
 
-export const constantRouterMap = [
+export const constantRouterMap: Array<any> = [
   {
     path: '/login',
-    component: () => import('@/views/login/index')
+    component: () => import('@/views/login/index.vue')
   },
   {
     path: '/',
@@ -34,7 +34,7 @@ export const constantRouterMap = [
       {
         path: 'dashboard',
         name: 'dashboard',
-        component: () => import('@/views/dashboard/index'),
+        component: () => import('@/views/dashboard/index.vue'),
         meta: {
           title: 'dashboard',
           icon: 'dashboard',
@@ -42,10 +42,10 @@ export const constantRouterMap = [
         }
       },
       {
-        path: '/personCenter',
+        path: 'personCenter',
         name: 'personCenter',
         hidden: true,
-        component: () => import('@/views/user/personCenter'),
+        component: () => import('@/views/user/personCenter.vue'),
         meta: {
           title: '个人中心',
           icon: 'account-fill'
@@ -55,7 +55,7 @@ export const constantRouterMap = [
   }
 ]
 
-export const asyncRouterMap = [
+export const asyncRouterMap: Array<any> = [
   {
     path: '/',
     name: 'index',
@@ -71,7 +71,7 @@ export const asyncRouterMap = [
       {
         path: 'nested',
         name: 'nested',
-        component: () => import('@/views/nested/index'),
+        component: () => import('@/views/nested/index.vue'),
         meta: {
           title: 'nested',
           icon: 'nav-list',
@@ -82,7 +82,7 @@ export const asyncRouterMap = [
       {
         path: 'render',
         name: 'render',
-        component: () => import('@/views/render/index'),
+        component: () => import('@/views/render/index.vue'),
         meta: {
           title: 'render',
           icon: 'list-show',
@@ -93,7 +93,7 @@ export const asyncRouterMap = [
           {
             path: 'test1',
             name: 'test1',
-            component: () => import('@/views/render/index'),
+            component: () => import('@/views/render/index.vue'),
             meta: {
               title: 'test1',
               icon: 'list-hide',
@@ -120,7 +120,7 @@ export const asyncRouterMap = [
       {
         path: 'index1',
         name: 'index1',
-        component: () => import('@/views/base/index1/index'),
+        component: () => import('@/views/base/index1/index.vue'),
         meta: {
           title: 'index1',
           icon: 'category',
@@ -133,9 +133,13 @@ export const asyncRouterMap = [
 ]
 
 export default new Router({
-  scrollBehavior: () => ({
-    y: 0
-  }),
+  scrollBehavior: () => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve({ x: 0, y: 1 })
+      }, 0)
+    })
+  },
   base: process.env.BASE_URL,
   routes: constantRouterMap
 })
