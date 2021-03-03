@@ -19,30 +19,31 @@
   </div>
 </template>
 
-<script>
-import AsideBar from './components/AsideBar'
-import MainSection from './components/MainSection'
-export default {
-  name: 'Layout',
+<script lang="ts">
+import { Vue, Component } from 'vue-property-decorator'
+import AsideBar from './components/AsideBar.vue'
+import MainSection from './components/MainSection.vue'
+import store from '../../store/index'
+@Component({
   components: {
     AsideBar,
     MainSection
-  },
-  computed: {
-    isCollapse () {
-      return this.$store.getters.isCollapse
-    },
-    isMobile () {
-      return this.$store.getters.isMobile
-    }
-  },
-  methods: {
-    /**
-     * @method 控制mobile模式下侧边栏显隐
-     */
-    handleMobileAsidebarBg () {
-      this.$store.commit('UPDATE_COLLAPSE', true)
-    }
+  }
+})
+export default class Layout extends Vue {
+  // computed
+  get isCollapse () {
+    return store.getters.isCollapse
+  }
+  get isMobile () {
+    return store.getters.isMobile
+  }
+  // methods
+  /**
+   * @method 控制mobile模式下侧边栏显隐
+   */
+  handleMobileAsidebarBg (): void {
+    store.commit('UPDATE_COLLAPSE', true)
   }
 }
 </script>

@@ -24,48 +24,48 @@
   </div>
 </template>
 
-<script>
-import storage from '@/utils/storage'
-export default {
-  name: 'login',
-  data () {
-    return {
-      loginForm: {
-        username: 'admin',
-        password: '12345678'
-      },
-      pwdIsShow: false,
-      loginRules: {
-        username: [
-          { required: true, message: '请输入用户名', trigger: 'blur' },
-          { min: 3, message: '长度在3位字符以上', trigger: 'blur' }
-        ],
-        password: [
-          { required: true, message: '请输入密码', trigger: 'blur' },
-          { min: 6, message: '长度在6位字符以上', trigger: 'blur' }
-        ]
-      },
-      toPath: '/'
-    }
-  },
+<script lang="ts">
+import { Vue, Component } from 'vue-property-decorator'
+import storage from '../../utils/storage'
+@Component({})
+export default class Login extends Vue {
+  loginForm: Object = {
+    username: 'admin',
+    password: '12345678'
+  }
+  pwdIsShow: boolean = false
+  loginRules: Object = {
+    username: [
+      { required: true, message: '请输入用户名', trigger: 'blur' },
+      { min: 3, message: '长度在3位字符以上', trigger: 'blur' }
+    ],
+    password: [
+      { required: true, message: '请输入密码', trigger: 'blur' },
+      { min: 6, message: '长度在6位字符以上', trigger: 'blur' }
+    ]
+  }
+  toPath: string = '/'
+
   mounted () {
-    if (Object.keys(this.$route.query).length && this.$route.query.redirect !== 'undefined') {
-      this.toPath = this.$route.query.redirect
+    const that: any = this
+    if (Object.keys(that.$route.query).length && that.$route.query.redirect !== 'undefined') {
+      this.toPath = that.$route.query.redirect
     }
-  },
-  methods: {
-    /**
-     * @method login 登录
-     */
-    login () {
-      this.$store
-        .dispatch('LOGIN', this.loginForm)
-        .then(response => {
-          storage.setItem({ key: 'expires', value: response.data.expires, expires: 9 * 1000 * 1000 })
-          this.$router.push(this.toPath)
-        })
-        .catch(err => console.log(err))
-    }
+  }
+  // methods
+  /**
+   * @method login 登录
+   */
+  login () {
+    this.$store
+      .dispatch('LOGIN', this.loginForm)
+      .then((response: any) => {
+        const that: any = this
+        const item: any = { key: 'expires', value: response.data.expires, expires: 9 * 1000 * 1000 }
+        storage.setItem(item)
+        that.$router.push(this.toPath)
+      })
+      .catch(err => console.log(err))
   }
 }
 </script>

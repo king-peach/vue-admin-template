@@ -7,7 +7,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-const Nested = require('@/views/nested/index.vue')
+import Nested from '../../nested/index.vue'
 @Component({
   components: {
     Nested

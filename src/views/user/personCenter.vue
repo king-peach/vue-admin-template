@@ -23,51 +23,51 @@
   </div>
 </template>
 
-<script>
-import ResetPassword from './components/resetPassword'
-export default {
-  name: 'personCenter',
+<script lang="ts">
+import { Vue, Component } from 'vue-property-decorator'
+import ResetPassword from './components/resetPassword.vue'
+@Component({
   components: {
     ResetPassword
-  },
-  data () {
-    return {
-      resetPasswordVisible: false,
-      userList: [
-        {
-          key: '用户名',
-          value: this.$store.getters.role,
-          icon: 'account'
-        },
-        {
-          key: '姓名1',
-          value: this.$store.getters.name,
-          icon: 'account'
-        },
-        {
-          key: '安全设置',
-          value: '修改密码',
-          icon: 'password-fill'
-        },
-        {
-          key: '邮箱',
-          value: 'xxxxxx@qq.com',
-          icon: 'email'
-        }
-      ],
-      avatar: this.$store.getters.avatar
-    }
-  },
-  methods: {
-    handleResetPassword () {
-      this.resetPasswordVisible = true
+  }
+})
+export default class PersonCenter extends Vue {
+  resetPasswordVisible: boolean = false
+  userList: Array<Object> = [
+    {
+      key: '用户名',
+      value: this.$store.getters.role,
+      icon: 'account'
     },
-    comfirmReset () {
-      this.resetPasswordVisible = false
+    {
+      key: '姓名1',
+      value: this.$store.getters.name,
+      icon: 'account'
     },
-    cancelReset () {
-      this.resetPasswordVisible = false
+    {
+      key: '安全设置',
+      value: '修改密码',
+      icon: 'password-fill'
+    },
+    {
+      key: '邮箱',
+      value: 'xxxxxx@qq.com',
+      icon: 'email'
     }
+  ]
+  // computed
+  get avatar (): string {
+    return this.$store.getters.avatar
+  }
+  // methods
+  handleResetPassword (): void {
+    this.resetPasswordVisible = true
+  }
+  comfirmReset (): void {
+    this.resetPasswordVisible = false
+  }
+  cancelReset (): void {
+    this.resetPasswordVisible = false
   }
 }
 </script>

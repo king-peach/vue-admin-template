@@ -20,75 +20,77 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'tagsNav',
-  computed: {
-    tagsView () {
-      return this.$store.getters.visitedView
-    },
-    currentPath () {
-      return this.$store.getters.currentPath
+<script lang="ts">
+import { Vue, Component } from 'vue-property-decorator'
+@Component({})
+export default class TagsNav extends Vue {
+  // computed
+  get tagsView () {
+    return this.$store.getters.visitedView
+  }
+  get currentPath () {
+    return this.$store.getters.currentPath
+  }
+  // methods
+  /**
+   * @method 点击跳转到当前页
+   * @param {Object} route 当前路由信息
+   */
+  handleLinkCurrentView (route: any) {
+    // console.log(route)
+    const that: any = this
+    this.$store.commit('UPDATE_CURRENTPATH', route.path)
+    that.$router.push(route)
+  }
+  /**
+   * @method 删除当前页
+   * @param {Object} route 当前路由
+   */
+  handleRemoveCurrentView (route: any) {
+    const that: any = this
+    const index: number = this.tagsView.indexOf(route)
+    this.$store.commit('REMOVE_VISITED_VIEW', route)
+    if (route.path === this.currentPath) {
+      this.$store.commit('UPDATE_CURRENTPATH', this.tagsView[index - 1].path)
+      if (index > 0) that.$router.push(that.tagsView[index - 1].path)
     }
-  },
-  methods: {
-    /**
-     * @method 点击跳转到当前页
-     * @param {Object} route 当前路由信息
-     */
-    handleLinkCurrentView (route) {
-      // console.log(route)
-      this.$store.commit('UPDATE_CURRENTPATH', route.path)
-      this.$router.push(route)
-    },
-    /**
-     * @method 删除当前页
-     * @param {Object} route 当前路由
-     */
-    handleRemoveCurrentView (route) {
-      const index = this.tagsView.indexOf(route)
-      this.$store.commit('REMOVE_VISITED_VIEW', route)
-      if (route.path === this.currentPath) {
-        this.$store.commit('UPDATE_CURRENTPATH', this.tagsView[index - 1].path)
-        if (index > 0) this.$router.push(this.tagsView[index - 1].path)
-      }
-    },
-    /**
-     * @method 点击下拉菜单项事件
-     * @param {String} type 当前项标识
-     */
-    handleCommand (type) {
-      if (type === 'refreshCurrentView') {
-        // 刷新当前页
-        this.$router.go(this.currentPath)
-      } else if (type === 'closeCurrentView') {
-        // 关闭当前页
-        const [route] = this.tagsView.filter(item => {
-          return item.path === this.currentPath
-        })
+  }
+  /**
+   * @method 点击下拉菜单项事件
+   * @param {String} type 当前项标识
+   */
+  handleCommand (type: string) {
+    const that: any = this
+    if (type === 'refreshCurrentView') {
+      // 刷新当前页
+      that.$router.go(this.currentPath)
+    } else if (type === 'closeCurrentView') {
+      // 关闭当前页
+      const [route] = this.tagsView.filter((item: any) => {
+        return item.path === this.currentPath
+      })
 
-        if (route.meta.affix && this.tagsView.length === 1) return false
+      if (route.meta.affix && this.tagsView.length === 1) return false
 
-        this.handleRemoveCurrentView(route)
-      } else if (type === 'closeOtherView') {
-        // 关闭其他页
-        const _tagsView = this.tagsView.filter(item => {
-          return item.path === this.currentPath || item.meta.affix
-        })
+      this.handleRemoveCurrentView(route)
+    } else if (type === 'closeOtherView') {
+      // 关闭其他页
+      const _tagsView = this.tagsView.filter((item: any) => {
+        return item.path === this.currentPath || item.meta.affix
+      })
 
-        this.$store.commit('UPDATE_VISITED_VIEW', _tagsView)
-      } else if (type === 'closeAllView') {
-        // 关闭所有
-        const _tagsView = this.tagsView.filter(item => {
-          return item.meta.affix
-        })
+      this.$store.commit('UPDATE_VISITED_VIEW', _tagsView)
+    } else if (type === 'closeAllView') {
+      // 关闭所有
+      const _tagsView = this.tagsView.filter((item: any) => {
+        return item.meta.affix
+      })
 
-        this.$store.commit('UPDATE_VISITED_VIEW', _tagsView)
+      this.$store.commit('UPDATE_VISITED_VIEW', _tagsView)
 
-        if (_tagsView.length) {
-          this.$store.commit('UPDATE_CURRENTPATH', _tagsView[_tagsView.length - 1].path)
-          this.$router.push(_tagsView[_tagsView.length - 1].path)
-        }
+      if (_tagsView.length) {
+        this.$store.commit('UPDATE_CURRENTPATH', _tagsView[_tagsView.length - 1].path)
+        that.$router.push(_tagsView[_tagsView.length - 1].path)
       }
     }
   }

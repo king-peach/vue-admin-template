@@ -42,58 +42,58 @@
   </section>
 </template>
 
-<script>
-import TagsNav from './TagsNav'
-export default {
-  name: 'mainSection',
+<script lang="ts">
+import TagsNav from './TagsNav.vue'
+import { Vue, Component } from 'vue-property-decorator'
+@Component({
   components: {
     TagsNav
-  },
-  data () {
-    return {
-      avatar: this.$store.getters.avatar
-    }
-  },
-  computed: {
-    breadcrumbList () {
-      return this.$store.getters.breadcrumb
-    },
-    asideIsActive () {
-      return this.$store.getters.isCollapse
-    },
-    key () {
-      return this.$route.fullPath
-    },
-    visitedView () {
-      return this.$store.getters.visitedView
-    }
-  },
-  methods: {
-    /**
-     * @method 点击切换侧边栏显隐
-     */
-    handleChangeAsideStatus () {
-      this.$store.commit('UPDATE_COLLAPSE', !this.asideIsActive)
-    },
-    /**
-     * @method 点击面包屑路由跳转
-     * @param {String} path 路由path
-     */
-    handleLink (path) {
-      this.$store.commit('UPDATE_CURRENTPATH', path)
-    },
-    /**
-     * @method 点击响应相关用户操作
-     * @param {String} command 菜单指令
-     */
-    handleUserOperate (command) {
-      if (command === 'logout') {
-        this.$store.dispatch('LOGOUT').then(() => {
-          this.$router.push(`login?redirect=${this.$route.fullPath}`)
-        })
-      } else if (command === 'personCenter') {
-        this.$router.push(`/personCenter`)
-      }
+  }
+})
+export default class MainSection extends Vue {
+  // computed
+  get avatar () {
+    return this.$store.getters.avatar
+  }
+  get breadcrumbList () {
+    return this.$store.getters.breadcrumb
+  }
+  get asideIsActive () {
+    return this.$store.getters.isCollapse
+  }
+  get key () {
+    const that: any = this
+    return that.$route.fullPath
+  }
+  get visitedView () {
+    return this.$store.getters.visitedView
+  }
+  // methods
+  /**
+   * @method 点击切换侧边栏显隐
+   */
+  handleChangeAsideStatus (): void {
+    this.$store.commit('UPDATE_COLLAPSE', !this.asideIsActive)
+  }
+  /**
+   * @method 点击面包屑路由跳转
+   * @param {String} path 路由path
+   */
+  handleLink (path: string): void {
+    this.$store.commit('UPDATE_CURRENTPATH', path)
+  }
+  /**
+   * @method 点击响应相关用户操作
+   * @param {String} command 菜单指令
+   */
+  handleUserOperate (command: string): void {
+    const that: any = this
+    if (command === 'logout') {
+      that.$store.dispatch('LOGOUT').then(() => {
+        that.$router.push(`login?redirect=${that.$route.fullPath}`)
+      })
+    } else if (command === 'personCenter') {
+      that.$router.push(`/personCenter`)
     }
   }
 }
