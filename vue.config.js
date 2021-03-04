@@ -1,5 +1,5 @@
 const path = require('path')
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+// const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 function resolve(dir) {
   return path.join(__dirname, dir)
@@ -8,27 +8,19 @@ function resolve(dir) {
 module.exports = {
   configureWebpack: config => {
     if (process.env.NODE_ENV === 'production') {
-      config.plugins.push(
-        new UglifyJsPlugin({
-          uglifyOptions: {
-            compress: {
-              warnings: false,
-              drop_debugger: true,
-              drop_console: true,
-              pure_funcs: ['console.log', 'console.info'] // 移除打印语句
-            }
-          },
-          sourceMap: true,
-          parallel: true
-        })
-      )
+      // 移除console语句
+      config.optimization.minimizer[0].options.terserOptions.compress.warnings = false
+      config.optimization.minimizer[0].options.terserOptions.compress.drop_console = true
+      config.optimization.minimizer[0].options.terserOptions.compress.drop_debugger = true
+      config.optimization.minimizer[0].options.terserOptions.compress.pure_funcs = ['console.log']
+      // 大文件拆分
       config.performance = {
         hints: 'warning',
         maxAssetSize: 30000000,
-        maxEntryPoingtSize: 50000000,
-        assetsFilter: function(assetsFilename) {
-          return assetsFilename.endWith('.css') || assetsFilename.endWith('.js')
-        }
+        // maxEntryPoingtSize: 50000000,
+        // assetsFilter: function(assetsFilename) {
+        //   return assetsFilename.endWith('.css') || assetsFilename.endWith('.js')
+        // }
       }
     } else {
       // 非生产环境配置
