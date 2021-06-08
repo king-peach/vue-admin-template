@@ -20,17 +20,14 @@
 
 <script lang="ts">
 import { Vue, Component, Prop, Emit, Watch } from 'vue-property-decorator'
-import { editPassword } from '../../../api/personCenter'
+import { editPassword } from '@/api/personCenter'
 @Component({})
 export default class ResetPassword extends Vue {
-  @Prop() show!: boolean
-  resetPasswordVisible: boolean = false
-  @Watch('show')
-  handleWatchShow (val: boolean) {
-    this.resetPasswordVisible = val
-  }
+  @Prop(Boolean) readonly show!: boolean
 
-  comfirmPassValid: Function = (rule: any, value: any, callback: Function) => {
+  resetPasswordVisible: boolean = false
+
+  comfirmPassValid = (rule: any, value: any, callback: Function) => {
     const that: any = this
     if (!value) {
       callback(new Error('请重复新密码!'))
@@ -41,15 +38,20 @@ export default class ResetPassword extends Vue {
     }
   }
 
-  private resetPasswordForm: Object = {
+  resetPasswordForm = {
     oldPass: '',
     newPass: '',
     comfirmPass: ''
   }
-  private resetPassRules: Object = {
+  resetPassRules = {
     oldPass: [{ required: true, message: '请输入原始密码', trigger: 'blur' }],
     newPass: [{ required: true, message: '请输入新密码', trigger: 'blur' }],
     comfirmPass: [{ validator: this.comfirmPassValid, trigger: 'blur' }]
+  }
+
+  @Watch('show')
+  handleWatchShow (val: boolean) {
+    this.resetPasswordVisible = val
   }
 
   // methods
