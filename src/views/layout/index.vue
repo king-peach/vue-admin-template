@@ -3,12 +3,12 @@
     <section class="app-layout-aside">
       <div class="sidebar-logo-container">
         <router-link to="/" class="side-logo-link">
-          <img :src="require('assets/gold-logo.png')" alt="logo" />
-          <img :src="require('assets/gold-logo-text.png')" alt="logo-text" />
+          <img :src="require('assets/gold-logo.png')" alt="logo">
+          <img :src="require('assets/gold-logo-text.png')" alt="logo-text">
         </router-link>
       </div>
       <div class="sidebar-router-wrapper">
-        <img class="aside-list-bg" :src="require('assets/aside-list-bg.png')" alt="bg" />
+        <img class="aside-list-bg" :src="require('assets/aside-list-bg.png')" alt="bg">
         <div class="el-menu-wrapper">
           <aside-bar />
         </div>
@@ -32,10 +32,10 @@ import store from '../../store/index'
 })
 export default class Layout extends Vue {
   // computed
-  get isCollapse () {
+  get isCollapse (): boolean {
     return store.getters.isCollapse
   }
-  get isMobile () {
+  get isMobile (): boolean {
     return store.getters.isMobile
   }
   // methods

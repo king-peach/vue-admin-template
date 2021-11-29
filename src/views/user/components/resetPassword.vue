@@ -25,9 +25,9 @@ import { editPassword } from '@/api/personCenter'
 export default class ResetPassword extends Vue {
   @Prop(Boolean) readonly show!: boolean
 
-  resetPasswordVisible: boolean = false
+  resetPasswordVisible = false
 
-  comfirmPassValid = (rule: any, value: any, callback: Function) => {
+  comfirmPassValid = (rule: unknown, value: string, callback: CallableFunction): void => {
     const that: any = this
     if (!value) {
       callback(new Error('请重复新密码!'))
@@ -50,7 +50,7 @@ export default class ResetPassword extends Vue {
   }
 
   @Watch('show')
-  handleWatchShow (val: boolean) {
+  handleWatchShow (val: boolean): void {
     this.resetPasswordVisible = val
   }
 

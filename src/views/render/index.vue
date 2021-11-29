@@ -1,6 +1,6 @@
 <script>
 export default {
-  name: 'render',
+  name: 'Render',
   data () {
     return {
       tree: [

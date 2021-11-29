@@ -1,7 +1,12 @@
 <template>
   <div class="tag-nav-wrapper">
     <ul class="tags-list">
-      <li v-for="(item, index) in tagsView" :key="index" :class="['tags-item', item.path === currentPath ? 'active' : '']" @click="handleLinkCurrentView(item)">
+      <li
+        v-for="(item, index) in tagsView"
+        :key="index"
+        :class="['tags-item', item.path === currentPath ? 'active' : '']"
+        @click="handleLinkCurrentView(item)"
+      >
         {{ item.hidden ? item.name : item.meta.title }}
         <i v-if="!item.meta.affix" class="el-icon-close ic-close" @click.stop="handleRemoveCurrentView(item)" />
       </li>
@@ -21,14 +26,15 @@
 </template>
 
 <script lang="ts">
+import { RouterType } from '@/store/types'
 import { Vue, Component } from 'vue-property-decorator'
 @Component({})
 export default class TagsNav extends Vue {
   // computed
-  get tagsView () {
+  get tagsView (): RouterType[] {
     return this.$store.getters.visitedView
   }
-  get currentPath () {
+  get currentPath (): string {
     return this.$store.getters.currentPath
   }
   // methods
@@ -36,7 +42,7 @@ export default class TagsNav extends Vue {
    * @method 点击跳转到当前页
    * @param {Object} route 当前路由信息
    */
-  handleLinkCurrentView (route: any) {
+  handleLinkCurrentView (route: RouterType): void {
     // console.log(route)
     const that: any = this
     this.$store.commit('UPDATE_CURRENTPATH', route.path)
@@ -46,7 +52,7 @@ export default class TagsNav extends Vue {
    * @method 删除当前页
    * @param {Object} route 当前路由
    */
-  handleRemoveCurrentView (route: any) {
+  handleRemoveCurrentView (route: RouterType): void {
     const that: any = this
     const index: number = this.tagsView.indexOf(route)
     this.$store.commit('REMOVE_VISITED_VIEW', route)
@@ -59,7 +65,7 @@ export default class TagsNav extends Vue {
    * @method 点击下拉菜单项事件
    * @param {String} type 当前项标识
    */
-  handleCommand (type: string) {
+  handleCommand (type: string): boolean | undefined {
     const that: any = this
     if (type === 'refreshCurrentView') {
       // 刷新当前页
@@ -70,7 +76,7 @@ export default class TagsNav extends Vue {
         return item.path === this.currentPath
       })
 
-      if (route.meta.affix && this.tagsView.length === 1) return false
+      if ((route.meta && route.meta.affix) && this.tagsView.length === 1) return false
 
       this.handleRemoveCurrentView(route)
     } else if (type === 'closeOtherView') {

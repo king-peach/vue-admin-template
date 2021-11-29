@@ -1,16 +1,17 @@
 <script lang="tsx">
 import store from '../../../store'
+import { RouterType } from '@/store/types'
 // import store from '@/store'
 import { Vue, Component } from 'vue-property-decorator'
 // import { CreateElement, VNode } from 'vue'
 @Component({})
 export default class AsideBar extends Vue {
   // computed
-  get defaultIndex () {
+  get defaultIndex (): void {
     return store.getters.currentPath
   }
   // methods
-  clickHandle (e: any): void {
+  clickHandle (e: { index: unknown }): void {
     store.commit('UPDATE_CURRENTPATH', e.index)
   }
   /**
@@ -19,7 +20,7 @@ export default class AsideBar extends Vue {
    * @param {*} c 节点处理回调函数
    * @param {*} level 层级
    */
-  element (routers: any, c: Function, level: number): void {
+  element (routers: RouterType, c: CallableFunction, level: number): void {
     return routers
       .map((route: any) => {
         // 路由表hidden字段控制显隐
@@ -120,7 +121,7 @@ export default class AsideBar extends Vue {
       .filter((item: Node) => item)
   }
   // render function
-  render (createElement: any): void {
+  render (createElement: CallableFunction): void {
     const isCollapse: boolean = store.getters.isCollapse
     return createElement(
       'el-menu',

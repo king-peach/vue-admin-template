@@ -6,7 +6,7 @@
       </div>
       <div class="user-info-wrapper">
         <div class="avatar-wrapper">
-          <img :src="avatar ? avatar : require('@/assets/avatar_default.png')" alt="" />
+          <img :src="avatar ? avatar : require('@/assets/avatar_default.png')" alt="">
         </div>
         <ul class="user-info-list">
           <li v-for="(item, index) in userList" :key="index" class="user-info-item">
@@ -32,8 +32,8 @@ import ResetPassword from './components/resetPassword.vue'
   }
 })
 export default class PersonCenter extends Vue {
-  resetPasswordVisible: boolean = false
-  userList: Array<Object> = [
+  resetPasswordVisible = false
+  userList: Array<any> = [
     {
       key: '用户名',
       value: this.$store.getters.role,

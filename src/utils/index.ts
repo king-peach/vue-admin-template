@@ -3,17 +3,17 @@
  * @param {String} type 待校验类型
  * @param {*} value 待校验值
  */
-function isType (type: string) {
+function isType (type: string): (val: string) => boolean {
   return (value: string) => {
     return Object.prototype.toString.call(value) === `[object ${type}]`
   }
 }
 
 export const judgementType = {
-  isObject: (value: any) => {
+  isObject: (value: string): boolean => {
     return isType('object')(value)
   },
-  isArray: (value: any) => {
+  isArray: (value: string): boolean => {
     return isType('Array')(value)
   }
 }

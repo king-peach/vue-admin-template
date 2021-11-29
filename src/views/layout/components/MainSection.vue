@@ -1,14 +1,14 @@
 <template>
   <section class="app-layout-section">
     <header id="main-header">
-      <img :src="require('assets/main-header-bg.png')" alt="main-header" class="m-bg" />
+      <img :src="require('assets/main-header-bg.png')" alt="main-header" class="m-bg">
       <div class="aside-switch-wrapper" @click="handleChangeAsideStatus">
         <icon-svg icon-class="list-show" :class="['aside-switch', asideIsActive ? 'is-active' : '']" />
       </div>
       <div class="avatar_wrapper">
         <el-dropdown @command="handleUserOperate">
           <span class="el-dropdown-link">
-            <img :src="avatar ? avatar : require('assets/avatar_default.png')" alt="avatar" class="avatar" />
+            <img :src="avatar ? avatar : require('assets/avatar_default.png')" alt="avatar" class="avatar">
             <i class="el-icon-caret-bottom icon-caret" />
           </span>
           <el-dropdown-menu slot="dropdown">
@@ -45,6 +45,7 @@
 <script lang="ts">
 import TagsNav from './TagsNav.vue'
 import { Vue, Component } from 'vue-property-decorator'
+import { RouterType } from '@/store/types'
 @Component({
   components: {
     TagsNav
@@ -52,20 +53,20 @@ import { Vue, Component } from 'vue-property-decorator'
 })
 export default class MainSection extends Vue {
   // computed
-  get avatar () {
+  get avatar (): string {
     return this.$store.getters.avatar
   }
-  get breadcrumbList () {
+  get breadcrumbList (): RouterType[] {
     return this.$store.getters.breadcrumb
   }
-  get asideIsActive () {
+  get asideIsActive (): boolean {
     return this.$store.getters.isCollapse
   }
-  get key () {
+  get key (): string {
     const that: any = this
     return that.$route.fullPath
   }
-  get visitedView () {
+  get visitedView (): RouterType[] {
     return this.$store.getters.visitedView
   }
   // methods

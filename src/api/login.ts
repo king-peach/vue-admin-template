@@ -1,7 +1,7 @@
 import request from '@/utils/request'
 import { AxiosPromise } from 'axios'
 
-export function login(params: { username: string; password: string }): AxiosPromise {
+export function login (params: { username: string; password: string }): AxiosPromise {
   return request({
     url: '/auth/login',
     method: 'post',
@@ -12,7 +12,7 @@ export function login(params: { username: string; password: string }): AxiosProm
   })
 }
 
-export function logout(token: string): AxiosPromise {
+export function logout (token: string): AxiosPromise {
   return request({
     url: '/auth/logout',
     method: 'post',

@@ -29,12 +29,18 @@ import { Vue, Component } from 'vue-property-decorator'
 import storage from '../../utils/storage'
 @Component({})
 export default class Login extends Vue {
-  loginForm: Object = {
+  loginForm: {
+    username: string,
+    password: string
+  } = {
     username: 'admin',
     password: '12345678'
   }
-  pwdIsShow: boolean = false
-  loginRules: Object = {
+  pwdIsShow = false
+  loginRules: {
+    username: any,
+    password: any
+  } = {
     username: [
       { required: true, message: '请输入用户名', trigger: 'blur' },
       { min: 3, message: '长度在3位字符以上', trigger: 'blur' }
@@ -44,9 +50,9 @@ export default class Login extends Vue {
       { min: 6, message: '长度在6位字符以上', trigger: 'blur' }
     ]
   }
-  toPath: string = '/'
+  toPath = '/'
 
-  mounted () {
+  mounted (): void {
     const that: any = this
     if (Object.keys(that.$route.query).length && that.$route.query.redirect !== 'undefined') {
       this.toPath = that.$route.query.redirect
@@ -56,7 +62,7 @@ export default class Login extends Vue {
   /**
    * @method login 登录
    */
-  login () {
+  login (): void {
     this.$store
       .dispatch('LOGIN', this.loginForm)
       .then((response: any) => {
